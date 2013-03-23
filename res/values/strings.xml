@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bangalore Complaint Box</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+
+    <string-array name="basic_items">
+        <item>Water</item>
+        <item>Law and Order</item>
+        <item>Electricity</item>
+        <item>Transportation</item>
+        <item>Road</item>
+        <item>Sewage</item>
+    </string-array>
+    <string-array name="basic_items_vals">
+        <item>water</item>
+        <item>lawandorder</item>
+        <item>electricity</item>
+        <item>transportation</item>
+        <item>road</item>
+        <item>sewage</item>
+    </string-array>
+    <string-array name="lawandorder">
+        <item> rowdiness in on the rise in the neighbourhood. </item>
+        <item> police station staff not co-operative. </item>
+        <item> police is not working to hard to reach to people. </item>
+        <item> high level of distrust on police. </item>
+        <item> my area feels very insecure. </item>
+        <item> should not be there a police awareness day , once in 3 months , where citizen should be encouraged									
+    to review there police stations , if they are happy with service of staff. </item>
+        <item> police station not well maintained, gives gloomy feeling. </item>
+        <item> quality of lawyers detriorating. </item>
+        <item> court compounds not well maintained. </item>
+        <item> should not there be a court awareness day , once in 3 months , where citizens should be encouraged 									
+   to review there courts , to check that they are  happy with service of the  staff. </item>
+        <item> judgements are dragging for long , improve the judiciary. </item>
+        <item> court system sucks, i want to bow out of contract of signing the constitution. </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="water">
+        <item> no water supply in our area. </item>
+        <item> water charges are too much. </item>
+        <item> water pipes leaking all over the place , water contamination dangers. </item>
+        <item> we have to heavily rely on tankers for water supply ,,, please look into it. </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="electricity">
+        <item> power too costly , totally not affordable,  reduce prices. </item>
+        <item> powerlines are hanging too low in my neighbourhood. </item>
+        <item> transformers unprotected. </item>
+        <item> No initative from power department on educating customer. </item>
+        <item> Enough these power cuts, increase power generation capacity.  </item>
+        <item> power stations and transformers not well maintained,making my area look dirty. </item>
+        <item> why we do not have electricity awareness day,  I want to know what I pay for.  </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="transportation">
+        <item>public buses not on time </item>
+        <item> public buses not there no my route. </item>
+        <item> buses not clean. </item>
+        <item> buses conductor being rude. </item>
+        <item> buses not sufficient. </item>
+        <item> autorickshaw refusal menance. </item>
+        <item> autorickshaw not following meters ... overcharging. </item>
+        <item> autorickshaw misbehavior menance </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="road">
+        <item> road in bad shape.  </item>
+        <item> no roads in my area. </item>
+        <item> potholes everywhere on the road </item>
+        <item> congestion is causing the havoc in the city , we need a bridge. </item>
+        <item> please work with engineer deliver us congestion free routes. </item>
+        <item> we need metro tracks. </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="sewage">
+        <item> sewage is over flowing everywhere. </item>
+        <item> lot of manholes left open. </item>
+        <item> sewage charges are too much. </item>
+        <item> lot of garbage is left unaddressed. </item>
+        <item> my surrounding has become a garbage yard , please take care of it. </item>
+        <item> garbage has made environment like hell , is this the city we dreamt of. </item>
+        <item> please  increase the garbage truck capacity. </item>
+        <item> Streets are dirty all the time , please launch awareness programme. Explain how citizens can help. </item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+
+    <string name="otherTypeOfComplaint"></string>
+    <string name="title_activity_action">ActionActivity</string>
+    <string name="title_activity_type_complaint">TypeComplaintActivity</string>
+    <string name="title_activity_photo_capture">PhotoCaptureActivity</string>
+    <string name="title_activity_get_location">GetLocationActivity</string>
+
+</resources>
