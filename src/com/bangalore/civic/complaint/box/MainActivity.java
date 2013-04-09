@@ -34,6 +34,10 @@ public class MainActivity extends SherlockActivity {
 				Intent newIntent = new Intent(MainActivity.this,
 						ActionActivity.class);
 				newIntent.putExtra(IntentExtraConstants.BASE_ITEM_POS, pos);
+				String[] itemsIndex = getResources().getStringArray(
+						R.array.basic_items_index);
+				newIntent.putExtra(IntentExtraConstants.BASE_ITEM_INDEX,
+						itemsIndex[pos]);
 				newIntent.putExtra(IntentExtraConstants.LEVEL_COMPLETE, 1);
 				startActivity(newIntent);
 			}

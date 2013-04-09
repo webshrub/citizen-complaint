@@ -22,20 +22,23 @@ public class GetLocationActivity extends SherlockActivity {
 
 	protected static final int PROGRESS_DIALOG = 111;
 
+	private MyLocationListener mlocListener;
+	private LocationManager mlocManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_location);
 		((Button) findViewById(R.id.button1))
 				.setOnClickListener(new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
-						LocationManager mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-						LocationListener mlocListener = new MyLocationListener(
-								GetLocationActivity.this);
 						Criteria criteria = new Criteria();
 						criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+						mlocListener = new MyLocationListener(
+								GetLocationActivity.this);
+						mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 						String bestProvider = mlocManager.getBestProvider(
 								criteria, true);
 
@@ -88,6 +91,8 @@ public class GetLocationActivity extends SherlockActivity {
 		public void onLocationChanged(Location loc) {
 			if (getLocationActivity.isFinishing())
 				return;
+
+			mlocManager.removeUpdates(mlocListener);
 			loc.getLatitude();
 			loc.getLongitude();
 			String Text = "My current location is: " + "Latitud = "

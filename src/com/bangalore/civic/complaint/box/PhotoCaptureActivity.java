@@ -21,6 +21,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -38,6 +39,10 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 public class PhotoCaptureActivity extends SherlockActivity implements
 		OnClickListener {
+
+	private static final int DIALOG_UPLOAD_DONE = 1;
+	private static final int DIALOG_UPLOAD_PROGRESS = 2;
+	private static final int DIALOG_UPLOAD_FAILED = 3;
 
 	private static final int IMAGE_CAPTURE_REQUEST = 100;
 	private static final int IMAGE_SELECT_REQUEST = 101;
@@ -80,6 +85,7 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 		case R.id.button3: {
 			PostDetailsAsyncTask task = new PostDetailsAsyncTask();
 			task.execute(getIntent());
+			showDialog(DIALOG_UPLOAD_PROGRESS);
 		}
 			break;
 		}
@@ -167,16 +173,26 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 										IntentExtraConstants.LONGITUDE, 0)));
 				String[] baseItems = getResources().getStringArray(
 						R.array.basic_items);
-				multipartEntity.addPart(
-						"issue_type",
-						new StringBody(baseItems[params[0].getIntExtra(
-								IntentExtraConstants.BASE_ITEM_POS, 0)]));
 				multipartEntity
 						.addPart(
-								"issue_tmpl_id",
+								"issue_type",
 								new StringBody(
 										params[0]
-												.getStringExtra(IntentExtraConstants.ACTION_DETAILS_TEXT)));
+												.getStringExtra(IntentExtraConstants.BASE_ITEM_INDEX)));
+				String[] templateid = getResources().getStringArray(
+						getResourceIDForTemplateID());
+				multipartEntity.addPart(
+						"issue_tmpl_id",
+						new StringBody(templateid[params[0].getIntExtra(
+								IntentExtraConstants.ACTION_DETAILS_POS, 0)]));
+				String[] txtList = getResources().getStringArray(
+						getResourceIDForTemplateText());
+				multipartEntity.addPart(
+						"txt",
+						new StringBody(txtList[params[0].getIntExtra(
+								IntentExtraConstants.ACTION_DETAILS_POS, 0)]));
+
+				multipartEntity.addPart("reporter_id", new StringBody("234"));
 				if (uri != null) {
 					String path = getPath(uri);
 					multipartEntity
@@ -193,32 +209,120 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 
 		}
 
-		@Override
-		protected void onPostExecute(Boolean result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			showDialog(0);
-
+		private int getResourceIDForTemplateText() {
+			int basePos = getIntent().getIntExtra(
+					IntentExtraConstants.BASE_ITEM_POS, 0);
+			int curListID = 0;
+			switch (basePos) {
+			case 0:
+				curListID = R.array.water;
+				break;
+			case 1:
+				curListID = R.array.lawandorder;
+				break;
+			case 2:
+				curListID = R.array.electricity;
+				break;
+			case 3:
+				curListID = R.array.transportation;
+				break;
+			case 4:
+				curListID = R.array.road;
+				break;
+			case 5:
+				curListID = R.array.sewage;
+				break;
+			}
+			return curListID;
 		}
 
+		private int getResourceIDForTemplateID() {
+			int basePos = getIntent().getIntExtra(
+					IntentExtraConstants.BASE_ITEM_POS, 0);
+			int curListID = 0;
+			switch (basePos) {
+			case 0:
+				curListID = R.array.water_index;
+				break;
+			case 1:
+				curListID = R.array.lawandorder_index;
+				break;
+			case 2:
+				curListID = R.array.electricity_index;
+				break;
+			case 3:
+				curListID = R.array.transportation_index;
+				break;
+			case 4:
+				curListID = R.array.road_index;
+				break;
+			case 5:
+				curListID = R.array.sewage_index;
+				break;
+			}
+			return curListID;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+			super.onPostExecute(result);
+			dismissDialog(DIALOG_UPLOAD_PROGRESS);
+			if (result) {
+				showDialog(DIALOG_UPLOAD_DONE);
+			} else {
+				showDialog(DIALOG_UPLOAD_FAILED);
+			}
+
+		}
 	}
 
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(int id) {
-		return new AlertDialog.Builder(this).setTitle("Upload Done")
-				.setMessage("Upload done")
-				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		switch (id) {
+		case DIALOG_UPLOAD_DONE: {
+			return new AlertDialog.Builder(this)
+					.setTitle("Upload Done")
+					.setMessage("Upload done")
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						Intent newIntent = new Intent(
-								PhotoCaptureActivity.this, MainActivity.class);
-						newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-								| Intent.FLAG_ACTIVITY_NEW_TASK);
-					}
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									Intent newIntent = new Intent(
+											PhotoCaptureActivity.this,
+											MainActivity.class);
+									newIntent
+											.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+													| Intent.FLAG_ACTIVITY_NEW_TASK);
+									startActivity(newIntent);
+								}
 
-				}).create();
+							}).create();
+		}
 
+		case DIALOG_UPLOAD_PROGRESS: {
+			return ProgressDialog.show(this, "Uploading...",
+					"Upload in progress");
+		}
+		case DIALOG_UPLOAD_FAILED: {
+			return new AlertDialog.Builder(this)
+					.setTitle("Upload Failed")
+					.setMessage("Upload Failed")
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									dialog.dismiss();
+								}
+
+							}).create();
+		}
+
+		}
+		return null;
 	}
 }
