@@ -71,8 +71,8 @@ public class ActionActivity extends SherlockActivity {
 				Intent newIntent = new Intent(ActionActivity.this,
 						GetLocationActivity.class);
 				newIntent.putExtras(getIntent());
-				newIntent.putExtra(IntentExtraConstants.ACTION_DETAILS_POS,
-						pos + 1);
+				newIntent
+						.putExtra(IntentExtraConstants.ACTION_DETAILS_POS, pos);
 				newIntent.putExtra(IntentExtraConstants.ACTION_DETAILS_TEXT,
 						getResources().getStringArray(curListID)[pos]);
 				startActivity(newIntent);

@@ -4,6 +4,7 @@
     <string name="app_name">Bangalore Complaint Box</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="otherTypeOfComplaint">Some other type of complaint</string>
 
     <string-array name="basic_items">
         <item>Water</item>
@@ -67,7 +68,7 @@
     </string-array>
     <string-array name="water">
         <item>No municipality water in this area.</item>
-        <item>we have to heavily rely on tankers for water supply ,,, please look into it.</item>
+        <item>we have to heavily rely on tankers for water supply, please look into it.</item>
         <item>water pipes leaking all over the place , water contamination dangers.</item>
         <item>Municipality water tastes  bad/oily.</item>
         <item>Water department staff very rude .</item>
