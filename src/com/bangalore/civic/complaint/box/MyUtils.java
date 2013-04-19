@@ -13,12 +13,12 @@ public class MyUtils {
 	public static final int MEDIA_TYPE_VIDEO = 2;
 
 	/** Create a file Uri for saving an image or video */
-	public static Uri getOutputMediaFileUri(int type) {
-		return Uri.fromFile(getOutputMediaFile(type));
+	public static Uri getOutputMediaFileUri(int type, StringBuffer filepath) {
+		return Uri.fromFile(getOutputMediaFile(type, filepath));
 	}
 
 	/** Create a File for saving an image or video */
-	public static File getOutputMediaFile(int type) {
+	public static File getOutputMediaFile(int type, StringBuffer filepath) {
 		// To be safe, you should check that the SDCard is mounted
 		// using Environment.getExternalStorageState() before doing this.
 
@@ -50,6 +50,8 @@ public class MyUtils {
 		} else {
 			return null;
 		}
+		filepath.delete(0, filepath.length());
+		filepath.append(mediaFile.getAbsolutePath());
 
 		return mediaFile;
 	}

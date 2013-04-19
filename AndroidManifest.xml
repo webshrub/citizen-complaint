@@ -41,12 +41,13 @@
         </activity>
         <activity
             android:name="com.bangalore.civic.complaint.box.PhotoCaptureActivity"
+            android:configChanges="orientation"
             android:label="@string/title_activity_photo_capture"
             android:theme="@style/Theme.Sherlock.Light" >
         </activity>
         <activity
             android:name="com.bangalore.civic.complaint.box.GetLocationActivity"
-            android:label="@string/title_activity_get_location" 
+            android:label="@string/title_activity_get_location"
             android:theme="@style/Theme.Sherlock.Light" >
         </activity>
     </application>

@@ -40,6 +40,6 @@
         android:layout_below="@+id/editText1"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="Button" />
+        android:text="Done" />
 
 </RelativeLayout>

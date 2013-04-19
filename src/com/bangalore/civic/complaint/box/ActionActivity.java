@@ -58,7 +58,7 @@ public class ActionActivity extends SherlockActivity {
 		((TextView) findViewById(R.id.textView1)).setText("Complaint about : "
 				+ baseItems[baseItemPos] + "...");
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, R.id.textView1, getResources()
 						.getStringArray(curListID));
 		ListView listView = (ListView) findViewById(R.id.listView1);
@@ -68,14 +68,23 @@ public class ActionActivity extends SherlockActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos,
 					long id) {
-				Intent newIntent = new Intent(ActionActivity.this,
-						GetLocationActivity.class);
-				newIntent.putExtras(getIntent());
-				newIntent
-						.putExtra(IntentExtraConstants.ACTION_DETAILS_POS, pos);
-				newIntent.putExtra(IntentExtraConstants.ACTION_DETAILS_TEXT,
-						getResources().getStringArray(curListID)[pos]);
-				startActivity(newIntent);
+				if (pos == adapter.getCount() - 1) {
+					Intent newIntent = new Intent(ActionActivity.this,
+							TypeComplaintActivity.class);
+					newIntent.putExtras(getIntent());
+					startActivity(newIntent);
+				} else {
+					Intent newIntent = new Intent(ActionActivity.this,
+							GetLocationActivity.class);
+					newIntent.putExtras(getIntent());
+					newIntent.putExtra(IntentExtraConstants.ACTION_DETAILS_POS,
+							pos);
+					newIntent.putExtra(
+							IntentExtraConstants.ACTION_DETAILS_TEXT,
+							getResources().getStringArray(curListID)[pos]);
+					startActivity(newIntent);
+				}
+
 			}
 		});
 	}

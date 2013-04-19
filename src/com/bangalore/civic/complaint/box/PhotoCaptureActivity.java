@@ -47,6 +47,7 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 	private static final int IMAGE_CAPTURE_REQUEST = 100;
 	private static final int IMAGE_SELECT_REQUEST = 101;
 	private static final String IMAGE_URI = "IMAGE_URI";
+	private static final StringBuffer photoURL = new StringBuffer();
 	private Uri uri;
 
 	@Override
@@ -69,7 +70,8 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 		switch (v.getId()) {
 		case R.id.button1: {
 			newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			uri = MyUtils.getOutputMediaFileUri(MyUtils.MEDIA_TYPE_IMAGE);
+			uri = MyUtils.getOutputMediaFileUri(MyUtils.MEDIA_TYPE_IMAGE,
+					photoURL);
 			newIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 			startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
 		}
@@ -106,6 +108,7 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 				ImageView imageView = ((ImageView) findViewById(R.id.imageView1));
 				uri = data.getData();
 				imageView.setImageURI(data.getData());
+				photoURL.delete(0, photoURL.length());
 			}
 		default:
 			break;
@@ -179,21 +182,38 @@ public class PhotoCaptureActivity extends SherlockActivity implements
 								new StringBody(
 										params[0]
 												.getStringExtra(IntentExtraConstants.BASE_ITEM_INDEX)));
-				String[] templateid = getResources().getStringArray(
-						getResourceIDForTemplateID());
-				multipartEntity.addPart(
-						"issue_tmpl_id",
-						new StringBody(templateid[params[0].getIntExtra(
-								IntentExtraConstants.ACTION_DETAILS_POS, 0)]));
+				if (params[0].getIntExtra(
+						IntentExtraConstants.ACTION_DETAILS_POS, -1) > -1) {
+
+					String[] templateid = getResources().getStringArray(
+							getResourceIDForTemplateID());
+					multipartEntity
+							.addPart(
+									"issue_tmpl_id",
+									new StringBody(
+											templateid[params[0]
+													.getIntExtra(
+															IntentExtraConstants.ACTION_DETAILS_POS,
+															0)]));
+				} else {
+					multipartEntity.addPart("issue_tmpl_id",
+							new StringBody("0"));
+
+				}
 				String[] txtList = getResources().getStringArray(
 						getResourceIDForTemplateText());
-				multipartEntity.addPart(
-						"txt",
-						new StringBody(txtList[params[0].getIntExtra(
-								IntentExtraConstants.ACTION_DETAILS_POS, 0)]));
+				multipartEntity
+						.addPart(
+								"txt",
+								new StringBody(
+										params[0]
+												.getStringExtra(IntentExtraConstants.ACTION_DETAILS_TEXT)));
 
 				multipartEntity.addPart("reporter_id", new StringBody("234"));
-				if (uri != null) {
+				if (photoURL.length() > 0) {
+					multipartEntity.addPart("img", new FileBody(new File(
+							photoURL.toString())));
+				} else if (uri != null) {
 					String path = getPath(uri);
 					multipartEntity
 							.addPart("img", new FileBody(new File(path)));
