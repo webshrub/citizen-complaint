@@ -1,37 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ActionActivity" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp"
-        android:text="TextView"
-        android:textColor="@android:color/black" 
-        android:textSize="18sp"/>
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/textView1"
-        android:scaleType="fitXY"
-        android:src="@drawable/abs__ab_bottom_solid_dark_holo" />
-
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/imageView1" >
-    </ListView>
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent" tools:context=".ActionActivity">
+    <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+              android:layout_alignParentTop="true" android:layout_marginLeft="10dp" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+              android:layout_marginRight="10dp" android:text="TextView" android:textColor="@android:color/black" android:textSize="18sp"/>
+    <ImageView android:id="@+id/imageView1" android:layout_width="fill_parent" android:layout_height="1dp" android:layout_below="@id/textView1"
+               android:scaleType="fitXY" android:src="@drawable/abs__ab_bottom_solid_dark_holo"/>
+    <ListView android:id="@+id/listView1" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_alignParentLeft="true"
+              android:layout_below="@id/imageView1"/>
 </RelativeLayout>
