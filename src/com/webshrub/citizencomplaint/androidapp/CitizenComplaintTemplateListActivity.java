@@ -43,13 +43,17 @@ public class CitizenComplaintTemplateListActivity extends CitizenComplaintActivi
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
             if (position == adapter.getCount() - 1) {
+                citizenComplaint.setSelectedTemplateId(citizenComplaint.getCitizenComplaintTemplateAt(position).getTemplateId());
                 Intent newIntent = new Intent(CitizenComplaintTemplateListActivity.this, CitizenComplaintTypeComplaintActivity.class);
-                newIntent.putExtras(getIntent());
+                newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
                 startActivity(newIntent);
             } else {
+                citizenComplaint.setSelectedTemplateId(citizenComplaint.getCitizenComplaintTemplateAt(position).getTemplateId());
+                citizenComplaint.setSelectedTemplateString(citizenComplaint.getCitizenComplaintTemplateAt(position).getTemplateString());
                 Intent newIntent = new Intent(CitizenComplaintTemplateListActivity.this, CitizenComplaintPhotoCaptureActivity.class);
-                newIntent.putExtras(getIntent());
+                newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
                 startActivity(newIntent);
             }
         }

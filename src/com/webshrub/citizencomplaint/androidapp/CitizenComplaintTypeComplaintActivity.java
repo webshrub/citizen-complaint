@@ -17,9 +17,11 @@ public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActiv
 
     @Override
     public void onClick(View v) {
-        String complaint = ((EditText) findViewById(R.id.editText1)).getText().toString();
+        CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
+        String selectedTemplateComplaintString = ((EditText) findViewById(R.id.editText1)).getText().toString();
+        citizenComplaint.setSelectedTemplateString(selectedTemplateComplaintString);
         Intent newIntent = new Intent(CitizenComplaintTypeComplaintActivity.this, CitizenComplaintPhotoCaptureActivity.class);
-        newIntent.putExtras(getIntent());
+        newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
         startActivity(newIntent);
     }
 }

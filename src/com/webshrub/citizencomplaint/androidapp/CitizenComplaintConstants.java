@@ -8,4 +8,16 @@ package com.webshrub.citizencomplaint.androidapp;
  */
 public class CitizenComplaintConstants {
     public static final String CITIZEN_COMPLAINT = "CITIZEN_COMPLAINT";
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    public static final String IMAGE_URI = "IMAGE_URI";
+    public static final String CITIZEN_COMPLAINT_HOST = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
+    public static final String LATTITUDE_PARAMS = "lat";
+    public static final String LONGITUDE_PARAMS = "long";
+    public static final String ISSUE_TYPE_PARAMS = "issue_type";
+    public static final String TEMPLATE_ID_PARAMS = "issue_tmpl_id";
+    public static final String TEMPLATE_TEXT_PARAMS = "txt";
+    public static final String REPORTER_ID_PARAMS = "reporter_id";
+    public static final String IMAGE_URI_PARAMS = "img";
+    public static final String REPORTER_ID_VALUE = "234";
 }

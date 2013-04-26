@@ -15,6 +15,9 @@ import java.util.List;
 public class CitizenComplaint implements Parcelable {
     private String complaintId;
     private String complaintCategory;
+    private String selectedComplaintImageUri;
+    private String lattitude;
+    private String longitude;
     private String selectedTemplateId;
     private String selectedTemplateString;
     private List<CitizenComplaintTemplate> citizenComplaintTemplates = new ArrayList<CitizenComplaintTemplate>();
@@ -42,6 +45,30 @@ public class CitizenComplaint implements Parcelable {
         this.complaintCategory = complaintCategory;
     }
 
+    public String getSelectedComplaintImageUri() {
+        return selectedComplaintImageUri;
+    }
+
+    public void setSelectedComplaintImageUri(String selectedComplaintImageUri) {
+        this.selectedComplaintImageUri = selectedComplaintImageUri;
+    }
+
+    public String getLattitude() {
+        return lattitude;
+    }
+
+    public void setLattitude(String lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     public String getSelectedTemplateId() {
         return selectedTemplateId;
     }
@@ -66,6 +93,11 @@ public class CitizenComplaint implements Parcelable {
         this.citizenComplaintTemplates = citizenComplaintTemplates;
     }
 
+
+    public CitizenComplaintTemplate getCitizenComplaintTemplateAt(int position) {
+        return citizenComplaintTemplates.get(position);
+    }
+
     @Override
     public String toString() {
         return complaintCategory;
@@ -80,6 +112,9 @@ public class CitizenComplaint implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(complaintId);
         dest.writeString(complaintCategory);
+        dest.writeString(selectedComplaintImageUri);
+        dest.writeString(lattitude);
+        dest.writeString(longitude);
         dest.writeString(selectedTemplateId);
         dest.writeString(selectedTemplateString);
         dest.writeList(citizenComplaintTemplates);
@@ -88,6 +123,9 @@ public class CitizenComplaint implements Parcelable {
     private void readFromParcel(Parcel in) {
         complaintId = in.readString();
         complaintCategory = in.readString();
+        selectedComplaintImageUri = in.readString();
+        lattitude = in.readString();
+        longitude = in.readString();
         selectedTemplateId = in.readString();
         selectedTemplateString = in.readString();
         citizenComplaintTemplates = new ArrayList<CitizenComplaintTemplate>();
