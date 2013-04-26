@@ -12,7 +12,6 @@ public class CitizenComplaintActivity extends SherlockFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Appirater.appLaunched(this);
     }
 
     @Override

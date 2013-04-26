@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import com.sbstrm.appirater.Appirater;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class CitizenComplaintHomeActivity extends CitizenComplaintActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Appirater.appLaunched(this);
         setContentView(R.layout.fragment_tabs_pager);
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup();
