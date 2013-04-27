@@ -14,12 +14,12 @@ public class CitizenComplaintTemplateListActivity extends CitizenComplaintActivi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_action);
+        setContentView(R.layout.citizen_complaint_template_list_activity);
         CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
         String[] templates = getTemplates(citizenComplaint);
         ((TextView) findViewById(R.id.textView1)).setText("Complaint about : " + citizenComplaint.getComplaintCategory() + "...");
         ListView listView = (ListView) findViewById(R.id.listView1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.textView1, templates);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.citizen_complaint_list_item, R.id.textView1, templates);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new CitizenComplaintTemplateOnItemClickListener(adapter));
     }

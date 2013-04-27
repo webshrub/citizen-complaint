@@ -3,7 +3,6 @@ package com.webshrub.citizencomplaint.androidapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,7 +23,7 @@ public class TestActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.test_activity);
         Button btnTakePhoto = (Button) findViewById(R.id.button1);
         imgTakenPhoto = (ImageView) findViewById(R.id.imageView1);
         btnTakePhoto.setOnClickListener(new btnTakePhotoClicker());

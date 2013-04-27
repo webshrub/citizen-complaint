@@ -16,7 +16,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_capture);
+        setContentView(R.layout.citizen_complaint_photo_capture_activity);
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);

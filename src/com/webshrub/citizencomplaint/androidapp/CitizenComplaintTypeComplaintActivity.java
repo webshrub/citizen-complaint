@@ -11,7 +11,7 @@ public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type_complaint);
+        setContentView(R.layout.citizen_complaint_type_complaint_activity);
         findViewById(R.id.button1).setOnClickListener(this);
     }
 

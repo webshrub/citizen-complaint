@@ -23,7 +23,7 @@ public class CitizenComplaintHomeActivity extends CitizenComplaintActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Appirater.appLaunched(this);
-        setContentView(R.layout.fragment_tabs_pager);
+        setContentView(R.layout.citizen_complaint_home_activity);
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup();
 

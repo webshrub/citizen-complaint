@@ -14,11 +14,11 @@ import java.util.List;
 public class CitizenComplaintListFragment extends SherlockFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main, container, false);
+        View view = inflater.inflate(R.layout.citizen_complaint_list_fragment, container, false);
         ListView listView = (ListView) view.findViewById(R.id.listView1);
         List<CitizenComplaint> citizenComplaints = new CitizenComplaintManager(getSherlockActivity()).getCitizenComplaints();
         CitizenComplaint[] data = citizenComplaints.toArray(new CitizenComplaint[citizenComplaints.size()]);
-        listView.setAdapter(new CitizenComplaintAdapter<CitizenComplaint>(getSherlockActivity(), R.layout.list_item, data));
+        listView.setAdapter(new CitizenComplaintAdapter<CitizenComplaint>(getSherlockActivity(), R.layout.citizen_complaint_list_item, data));
         listView.setOnItemClickListener(new CitizenComplaintOnItemClickListener(listView));
         return view;
     }

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Citizen Complaint</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="otherTypeOfComplaint">Some other type of complaint</string>
     <string-array name="basic_items">
         <item>Water</item>
         <item>Law and Order</item>
@@ -205,10 +202,6 @@
         <item>0</item>
     </string-array>
     <string name="otherTypeOfComplaint">Other complaints..</string>
-    <string name="title_activity_action">ActionActivity</string>
-    <string name="title_activity_type_complaint">TypeComplaintActivity</string>
-    <string name="title_activity_photo_capture">PhotoCaptureActivity</string>
-    <string name="title_activity_get_location">GetLocationActivity</string>
     <string name="action_label_rate_us">Rate us</string>
     <string name="action_label_settings">Settings</string>
 </resources>

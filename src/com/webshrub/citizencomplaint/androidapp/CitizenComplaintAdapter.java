@@ -24,7 +24,7 @@ public class CitizenComplaintAdapter<CitizenComplaint> extends ArrayAdapter {
         View view = convertView;
         if (view == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = vi.inflate(R.layout.list_item, null);
+            view = vi.inflate(R.layout.citizen_complaint_list_item, null);
         }
         TextView textView = (TextView) view.findViewById(R.id.textView1);
         textView.setText(getItem(position).toString());
