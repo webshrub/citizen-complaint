@@ -24,16 +24,5 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" android:label="">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".ActionActivity" android:label="@string/title_activity_action" android:theme="@style/Theme.Sherlock.Light"/>
-        <activity android:name=".TypeComplaintActivity" android:label="@string/title_activity_type_complaint" android:theme="@style/Theme.Sherlock.Light"/>
-        <activity android:name=".PhotoCaptureActivity" android:configChanges="orientation" android:label="@string/title_activity_photo_capture"
-                  android:theme="@style/Theme.Sherlock.Light"/>
-        <activity android:name=".GetLocationActivity" android:label="@string/title_activity_get_location" android:theme="@style/Theme.Sherlock.Light"/>
     </application>
 </manifest>
