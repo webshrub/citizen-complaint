@@ -1,9 +1,18 @@
 package com.webshrub.citizencomplaint.androidapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
@@ -30,27 +39,36 @@ import java.io.IOException;
  * Date: 4/26/13
  * Time: 5:44 PM
  */
-public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<CitizenComplaint, Void, Boolean> {
+public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, Boolean> implements LocationListener {
     private Context context;
+    private CitizenComplaint citizenComplaint;
     private ProgressDialog progressDialog;
+    private LocationManager locationManager;
 
-    public CitizenComplaintPostDetailsAsyncTask(Context context) {
+    public CitizenComplaintPostDetailsAsyncTask(Context context, CitizenComplaint citizenComplaint) {
         this.context = context;
+        this.citizenComplaint = citizenComplaint;
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Uploading your complaint details..");
         progressDialog.setTitle("Please wait");
         progressDialog.setIndeterminate(true);
+
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
     protected void onPreExecute() {
         progressDialog.show();
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        String bestProvider = locationManager.getBestProvider(criteria, true);
+        locationManager.requestLocationUpdates(bestProvider, 99, 0, this);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected Boolean doInBackground(CitizenComplaint... params) {
+    protected Boolean doInBackground(Void... params) {
         Boolean success = true;
         try {
             HttpParams httpParams = new BasicHttpParams();
@@ -58,14 +76,14 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<CitizenCompl
             DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
             HttpPost httppost = new HttpPost(CitizenComplaintConstants.CITIZEN_COMPLAINT_HOST);
             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            multipartEntity.addPart(CitizenComplaintConstants.LATTITUDE_PARAMS, new StringBody("" + params[0].getLattitude()));
-            multipartEntity.addPart(CitizenComplaintConstants.LONGITUDE_PARAMS, new StringBody("" + params[0].getLongitude()));
-            multipartEntity.addPart(CitizenComplaintConstants.ISSUE_TYPE_PARAMS, new StringBody("" + params[0].getComplaintId()));
-            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_ID_PARAMS, new StringBody("" + params[0].getSelectedTemplateId()));
-            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + params[0].getSelectedTemplateString()));
+            multipartEntity.addPart(CitizenComplaintConstants.LATTITUDE_PARAMS, new StringBody("" + citizenComplaint.getLatitude()));
+            multipartEntity.addPart(CitizenComplaintConstants.LONGITUDE_PARAMS, new StringBody("" + citizenComplaint.getLongitude()));
+            multipartEntity.addPart(CitizenComplaintConstants.ISSUE_TYPE_PARAMS, new StringBody("" + citizenComplaint.getComplaintId()));
+            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_ID_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateId()));
+            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
             multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintConstants.REPORTER_ID_VALUE));
-            if (params[0].getSelectedComplaintImageUri() != null) {
-                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File("" + params[0].getSelectedComplaintImageUri())));
+            if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
+                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(getAbsoluteFilePath(citizenComplaint.getSelectedComplaintImageUri()))));
             }
             httppost.setEntity(multipartEntity);
             httpClient.execute(httppost, new PhotoUploadResponseHandler());
@@ -91,6 +109,43 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<CitizenCompl
         }
     }
 
+
+    @SuppressWarnings("deprecation")
+    private String getAbsoluteFilePath(String selectedComplaintImageUri) {
+        if (selectedComplaintImageUri.startsWith("content://")) {
+            Uri uri = Uri.parse(selectedComplaintImageUri);
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = ((Activity) context).managedQuery(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else {
+            Uri uri = Uri.parse(selectedComplaintImageUri);
+            return uri.getSchemeSpecificPart();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        while (citizenComplaint.getLatitude() == null || citizenComplaint.getLongitude() == null) {
+            citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
+            citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
+        }
+        Toast.makeText(context, "Your location is: Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude(), Toast.LENGTH_SHORT).show();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+    }
 
     private class PhotoUploadResponseHandler implements ResponseHandler {
         @Override

@@ -34,6 +34,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         super.onSaveInstanceState(outState);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onClick(View v) {
         Intent newIntent;
@@ -54,7 +55,8 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             break;
             case R.id.button3: {
                 CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
-                new CitizenComplaintPostDetailsAsyncTask(this).execute(citizenComplaint);
+                citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
+                new CitizenComplaintPostDetailsAsyncTask(this, citizenComplaint).execute();
             }
             break;
         }
@@ -67,7 +69,6 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         switch (requestCode) {
             case IMAGE_CAPTURE_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    imageUri = intent.getData();
                     imageView.setImageURI(imageUri);
                 }
                 break;
