@@ -31,8 +31,8 @@ public class CitizenComplaintHomeActivity extends CitizenComplaintActivity {
 
         mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
-        mTabsAdapter.addTab(mTabHost.newTabSpec("read").setIndicator("Read"), CitizenComplaintReadFragment.class, null);
         mTabsAdapter.addTab(mTabHost.newTabSpec("post").setIndicator("Post"), CitizenComplaintListFragment.class, null);
+        mTabsAdapter.addTab(mTabHost.newTabSpec("read").setIndicator("Read"), CitizenComplaintReadFragment.class, null);
 
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));

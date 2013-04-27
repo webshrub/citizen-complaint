@@ -55,7 +55,9 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             break;
             case R.id.button3: {
                 CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
-                citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
+                if (imageUri != null) {
+                    citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
+                }
                 new CitizenComplaintPostDetailsAsyncTask(this, citizenComplaint).execute();
             }
             break;
