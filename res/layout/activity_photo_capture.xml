@@ -10,7 +10,7 @@
                 <Button android:id="@+id/button2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1"
                         android:text="Pick Existing"/>
                 <Button android:id="@+id/button3" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1"
-                        android:text="Send Complaint"/>
+                        android:text="Send"/>
             </LinearLayout>
             <ImageView android:id="@+id/imageView1" android:layout_width="fill_parent" android:layout_height="wrap_content" android:adjustViewBounds="true"
                        android:scaleType="fitCenter" android:src="@drawable/camera"/>
