@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="preference_items">
+        <item>Help</item>
+        <item>About</item>
+        <item>Profile</item>
+    </string-array>
+</resources>

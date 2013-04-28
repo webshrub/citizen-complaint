@@ -18,6 +18,9 @@
         <activity android:name=".CitizenComplaintTypeComplaintActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
         <activity android:name=".CitizenComplaintPhotoCaptureActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
         <activity android:name=".CitizenComplaintPreferenceActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
+        <activity android:name=".CitizenComplaintHelpActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
+        <activity android:name=".CitizenComplaintAboutActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
+        <activity android:name=".CitizenComplaintProfileActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light"/>
         <activity android:name=".TestActivity" android:label="@string/app_name" android:theme="@style/Theme.Sherlock.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
