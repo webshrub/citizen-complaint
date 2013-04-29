@@ -1,6 +1,5 @@
 package com.webshrub.citizencomplaint.androidapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -80,10 +79,10 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
             multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
             multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintConstants.REPORTER_ID_VALUE));
             if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
-                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(CitizenComplaintUtility.getAbsoluteFilePath((Activity) context, citizenComplaint.getSelectedComplaintImageUri()))));
+                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(citizenComplaint.getSelectedComplaintImageUri())));
             }
             if (citizenComplaint.getProfileThumbnailImageUri() != null && !citizenComplaint.getProfileThumbnailImageUri().equals("")) {
-                multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(CitizenComplaintUtility.getAbsoluteFilePath((Activity) context, citizenComplaint.getProfileThumbnailImageUri()))));
+                multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(citizenComplaint.getProfileThumbnailImageUri())));
             }
             httppost.setEntity(multipartEntity);
             httpClient.execute(httppost, new PhotoUploadResponseHandler());

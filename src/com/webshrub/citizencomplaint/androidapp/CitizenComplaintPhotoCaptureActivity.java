@@ -58,7 +58,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             case R.id.button3: {
                 CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
                 if (imageUri != null) {
-                    citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
+                    citizenComplaint.setSelectedComplaintImageUri(CitizenComplaintUtility.getAbsoluteFilePath(this, imageUri.toString()));
                 }
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String profileThumbnailImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, "");
