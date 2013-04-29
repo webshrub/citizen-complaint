@@ -85,6 +85,9 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
             if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
                 multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(getAbsoluteFilePath(citizenComplaint.getSelectedComplaintImageUri()))));
             }
+            if (citizenComplaint.getProfileImageUri() != null && !citizenComplaint.getProfileImageUri().equals("")) {
+                multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(getAbsoluteFilePath(citizenComplaint.getProfileImageUri()))));
+            }
             httppost.setEntity(multipartEntity);
             httpClient.execute(httppost, new PhotoUploadResponseHandler());
         } catch (Exception e) {

@@ -1,8 +1,10 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,8 +22,8 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
-        if (savedInstanceState != null && savedInstanceState.containsKey(CitizenComplaintConstants.IMAGE_URI)) {
-            imageUri = Uri.parse(savedInstanceState.getString(CitizenComplaintConstants.IMAGE_URI));
+        if (savedInstanceState != null && savedInstanceState.containsKey(CitizenComplaintConstants.COMPLAINT_IMAGE_URI)) {
+            imageUri = Uri.parse(savedInstanceState.getString(CitizenComplaintConstants.COMPLAINT_IMAGE_URI));
             ((ImageView) findViewById(R.id.imageView1)).setImageURI(imageUri);
         }
     }
@@ -29,7 +31,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (imageUri != null) {
-            outState.putString(CitizenComplaintConstants.IMAGE_URI, imageUri.toString());
+            outState.putString(CitizenComplaintConstants.COMPLAINT_IMAGE_URI, imageUri.toString());
         }
         super.onSaveInstanceState(outState);
     }
@@ -58,6 +60,9 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
                 if (imageUri != null) {
                     citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
                 }
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                String profileImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_IMAGE_URI, "");
+                citizenComplaint.setProfileImageUri(profileImageUriString);
                 new CitizenComplaintPostDetailsAsyncTask(this, citizenComplaint).execute();
             }
             break;

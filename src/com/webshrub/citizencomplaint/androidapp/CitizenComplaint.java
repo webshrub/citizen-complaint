@@ -16,6 +16,7 @@ public class CitizenComplaint implements Parcelable {
     private String complaintId;
     private String complaintCategory;
     private String selectedComplaintImageUri;
+    private String profileImageUri;
     private String latitude;
     private String longitude;
     private String selectedTemplateId;
@@ -51,6 +52,14 @@ public class CitizenComplaint implements Parcelable {
 
     public void setSelectedComplaintImageUri(String selectedComplaintImageUri) {
         this.selectedComplaintImageUri = selectedComplaintImageUri;
+    }
+
+    public String getProfileImageUri() {
+        return profileImageUri;
+    }
+
+    public void setProfileImageUri(String profileImageUri) {
+        this.profileImageUri = profileImageUri;
     }
 
     public String getLatitude() {
@@ -113,6 +122,7 @@ public class CitizenComplaint implements Parcelable {
         dest.writeString(complaintId);
         dest.writeString(complaintCategory);
         dest.writeString(selectedComplaintImageUri);
+        dest.writeString(profileImageUri);
         dest.writeString(latitude);
         dest.writeString(longitude);
         dest.writeString(selectedTemplateId);
@@ -124,6 +134,7 @@ public class CitizenComplaint implements Parcelable {
         complaintId = in.readString();
         complaintCategory = in.readString();
         selectedComplaintImageUri = in.readString();
+        profileImageUri = in.readString();
         latitude = in.readString();
         longitude = in.readString();
         selectedTemplateId = in.readString();
