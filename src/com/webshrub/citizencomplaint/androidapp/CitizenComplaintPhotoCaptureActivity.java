@@ -61,8 +61,8 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
                     citizenComplaint.setSelectedComplaintImageUri(imageUri.toString());
                 }
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                String profileImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_IMAGE_URI, "");
-                citizenComplaint.setProfileImageUri(profileImageUriString);
+                String profileThumbnailImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, "");
+                citizenComplaint.setProfileThumbnailImageUri(profileThumbnailImageUriString);
                 new CitizenComplaintPostDetailsAsyncTask(this, citizenComplaint).execute();
             }
             break;

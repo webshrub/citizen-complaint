@@ -2,13 +2,20 @@ package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.SherlockActivity;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by IntelliJ IDEA.
@@ -67,8 +74,10 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                 if (resultCode == RESULT_OK) {
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
+                        String thumbnailPath = generateThumbnail(profileImageUri.getSchemeSpecificPart());
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
+                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
                         preferenceEditor.commit();
                     }
                 }
@@ -78,13 +87,33 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                     profileImageUri = intent.getData();
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
+                        String thumbnailPath = generateThumbnail(profileImageUri.getSchemeSpecificPart());
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
+                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
                         preferenceEditor.commit();
                     }
                 }
             default:
                 break;
         }
+    }
+
+    public String generateThumbnail(String imagePath) {
+        try {
+            String thumbnailImagePath = CitizenComplaintUtility.getOutputMediaFile(CitizenComplaintConstants.MEDIA_TYPE_IMAGE).getAbsolutePath();
+            Bitmap thumbnailImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), CitizenComplaintConstants.THUMBNAIL_SIZE, CitizenComplaintConstants.THUMBNAIL_SIZE);
+            File file = new File(thumbnailImagePath);
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            thumbnailImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return thumbnailImagePath;
+        } catch (Exception e) {
+            Log.e("Photo Upload", "Photo Upload exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }

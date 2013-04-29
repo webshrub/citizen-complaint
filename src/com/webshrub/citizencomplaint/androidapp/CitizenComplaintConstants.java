@@ -10,8 +10,10 @@ public class CitizenComplaintConstants {
     public static final String CITIZEN_COMPLAINT = "CITIZEN_COMPLAINT";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
+    public static final int THUMBNAIL_SIZE = 60;
     public static final String COMPLAINT_IMAGE_URI = "COMPLAINT_IMAGE_URI";
     public static final String PROFILE_IMAGE_URI = "PROFILE_IMAGE_URI";
+    public static final String PROFILE_THUMBNAIL_IMAGE_URI = "PROFILE_THUMBNAIL_IMAGE_URI";
     public static final String CITIZEN_COMPLAINT_HOST = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
     public static final String LATTITUDE_PARAMS = "lat";
     public static final String LONGITUDE_PARAMS = "long";
