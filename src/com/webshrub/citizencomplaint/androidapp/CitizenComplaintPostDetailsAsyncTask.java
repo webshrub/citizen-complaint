@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
@@ -83,10 +80,10 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
             multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
             multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintConstants.REPORTER_ID_VALUE));
             if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
-                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(getAbsoluteFilePath(citizenComplaint.getSelectedComplaintImageUri()))));
+                multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(CitizenComplaintUtility.getAbsoluteFilePath((Activity) context, citizenComplaint.getSelectedComplaintImageUri()))));
             }
             if (citizenComplaint.getProfileThumbnailImageUri() != null && !citizenComplaint.getProfileThumbnailImageUri().equals("")) {
-                multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(getAbsoluteFilePath(citizenComplaint.getProfileThumbnailImageUri()))));
+                multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(CitizenComplaintUtility.getAbsoluteFilePath((Activity) context, citizenComplaint.getProfileThumbnailImageUri()))));
             }
             httppost.setEntity(multipartEntity);
             httpClient.execute(httppost, new PhotoUploadResponseHandler());
@@ -109,22 +106,6 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
             context.startActivity(newIntent);
         } else {
             Toast.makeText(context, "Complaint could not be uploaded. Please try again.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    @SuppressWarnings("deprecation")
-    private String getAbsoluteFilePath(String selectedComplaintImageUri) {
-        if (selectedComplaintImageUri.startsWith("content://")) {
-            Uri uri = Uri.parse(selectedComplaintImageUri);
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = ((Activity) context).managedQuery(uri, projection, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } else {
-            Uri uri = Uri.parse(selectedComplaintImageUri);
-            return uri.getSchemeSpecificPart();
         }
     }
 

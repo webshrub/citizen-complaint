@@ -74,7 +74,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                 if (resultCode == RESULT_OK) {
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
-                        String thumbnailPath = generateThumbnail(profileImageUri.getSchemeSpecificPart());
+                        String thumbnailPath = generateThumbnail(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()));
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
@@ -87,7 +87,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                     profileImageUri = intent.getData();
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
-                        String thumbnailPath = generateThumbnail(profileImageUri.getSchemeSpecificPart());
+                        String thumbnailPath = generateThumbnail(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()));
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
                         preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);

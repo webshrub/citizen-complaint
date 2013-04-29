@@ -1,7 +1,10 @@
 package com.webshrub.citizencomplaint.androidapp;
 
+import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -31,5 +34,21 @@ public class CitizenComplaintUtility {
             return null;
         }
         return mediaFile;
+    }
+
+
+    @SuppressWarnings("deprecation")
+    public static String getAbsoluteFilePath(Activity activity, String inputUriString) {
+        if (inputUriString.startsWith("content://")) {
+            Uri uri = Uri.parse(inputUriString);
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } else {
+            Uri uri = Uri.parse(inputUriString);
+            return uri.getSchemeSpecificPart();
+        }
     }
 }
