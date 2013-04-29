@@ -48,7 +48,7 @@ public class CitizenComplaintUtility {
             return cursor.getString(column_index);
         } else {
             Uri uri = Uri.parse(inputUriString);
-            return uri.getSchemeSpecificPart();
+            return uri.getSchemeSpecificPart().substring(2);
         }
     }
 }
