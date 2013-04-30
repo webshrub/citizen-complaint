@@ -3,12 +3,7 @@ package com.webshrub.citizencomplaint.androidapp;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
@@ -35,11 +30,10 @@ import java.io.IOException;
  * Date: 4/26/13
  * Time: 5:44 PM
  */
-public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, Boolean> implements LocationListener {
+public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, Boolean> {
     private Context context;
     private CitizenComplaint citizenComplaint;
     private ProgressDialog progressDialog;
-    private LocationManager locationManager;
 
     public CitizenComplaintPostDetailsAsyncTask(Context context, CitizenComplaint citizenComplaint) {
         this.context = context;
@@ -49,17 +43,17 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
         progressDialog.setMessage("Uploading your complaint details..");
         progressDialog.setTitle("Please wait");
         progressDialog.setIndeterminate(true);
-
-        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onPreExecute() {
         progressDialog.show();
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-        String bestProvider = locationManager.getBestProvider(criteria, true);
-        locationManager.requestLocationUpdates(bestProvider, 99, 0, this);
+        try {
+            new CitizenComplaintGeoLocationAsyncTask(context, citizenComplaint).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -106,28 +100,6 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
         } else {
             Toast.makeText(context, "Complaint could not be uploaded. Please try again.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        while (citizenComplaint.getLatitude() == null || citizenComplaint.getLongitude() == null) {
-            citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
-            citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
-        }
-        Toast.makeText(context, "Your location is: Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude(), Toast.LENGTH_SHORT).show();
-        locationManager.removeUpdates(this);
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
     }
 
     private class PhotoUploadResponseHandler implements ResponseHandler {
