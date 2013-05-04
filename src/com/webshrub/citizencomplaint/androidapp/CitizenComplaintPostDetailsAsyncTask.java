@@ -72,9 +72,7 @@ public class CitizenComplaintPostDetailsAsyncTask extends AsyncTask<Void, Void, 
             multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_ID_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateId()));
             multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
             multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintUtility.getDeviceIdentifier(context)));
-            if (citizenComplaint.getComplaintAddress() != null && !citizenComplaint.getComplaintAddress().equals("")) {
-                multipartEntity.addPart(CitizenComplaintConstants.ADDRESS_PARAMS, new FileBody(new File(citizenComplaint.getComplaintAddress())));
-            }
+            multipartEntity.addPart(CitizenComplaintConstants.ADDRESS_PARAMS, new StringBody("" + citizenComplaint.getComplaintAddress()));
             if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
                 multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(citizenComplaint.getSelectedComplaintImageUri())));
             }
