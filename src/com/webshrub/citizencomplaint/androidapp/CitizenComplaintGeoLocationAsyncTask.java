@@ -1,13 +1,14 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Context;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,8 +45,29 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
     }
 
     @Override
+    protected void onPostExecute(CitizenComplaint citizenComplaint) {
+        super.onPostExecute(citizenComplaint);
+        String addressText = null;
+        if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
+            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+            List<Address> addresses = null;
+            try {
+                addresses = geocoder.getFromLocation(Double.valueOf(citizenComplaint.getLatitude()), Double.valueOf(citizenComplaint.getLongitude()), 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (addresses != null && addresses.size() > 0) {
+                Address address = addresses.get(0);
+                addressText = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
+            }
+        } else {
+            addressText = "Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude();
+        }
+        Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(context, "Your location is: Latitude = " + location.getLatitude() + ", Longitude = " + location.getLongitude(), Toast.LENGTH_SHORT).show();
         citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
         citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
     }

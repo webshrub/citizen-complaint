@@ -3,7 +3,11 @@ package com.webshrub.citizencomplaint.androidapp;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -65,5 +69,15 @@ public class CitizenComplaintUtility {
             deviceIdentifier = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         }
         return deviceIdentifier;
+    }
+
+    public static boolean isDeviceOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnectedOrConnecting();
+    }
+
+    public static boolean isGeocoderPresent() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Geocoder.isPresent();
     }
 }
