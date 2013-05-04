@@ -45,14 +45,13 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
     }
 
     @Override
-    protected void onPostExecute(CitizenComplaint citizenComplaint) {
-        super.onPostExecute(citizenComplaint);
-        String addressText = "Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude();
+    public void onLocationChanged(Location location) {
+        String addressText = "Latitude = " + location.getLatitude() + ", Longitude = " + location.getLongitude();
         if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = null;
             try {
-                addresses = geocoder.getFromLocation(Double.valueOf(citizenComplaint.getLatitude()), Double.valueOf(citizenComplaint.getLongitude()), 1);
+                addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -63,10 +62,6 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
             }
         }
         Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
         citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
         citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
     }
