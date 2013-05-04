@@ -57,8 +57,9 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
             }
             if (addresses != null && addresses.size() > 0) {
                 Address address = addresses.get(0);
-                addressText = addressText + "\n" + String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
-                citizenComplaint.setComplaintAddress(addressText);
+                String complaintAddress = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
+                addressText = addressText + "\n" + complaintAddress;
+                citizenComplaint.setComplaintAddress(complaintAddress);
             }
         }
         Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
