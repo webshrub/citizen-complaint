@@ -47,7 +47,7 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
     @Override
     protected void onPostExecute(CitizenComplaint citizenComplaint) {
         super.onPostExecute(citizenComplaint);
-        String addressText = null;
+        String addressText = "Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude();
         if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = null;
@@ -58,10 +58,9 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
             }
             if (addresses != null && addresses.size() > 0) {
                 Address address = addresses.get(0);
-                addressText = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
+                addressText = addressText + "\n" + String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
+                citizenComplaint.setComplaintAddress(addressText);
             }
-        } else {
-            addressText = "Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude();
         }
         Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
     }

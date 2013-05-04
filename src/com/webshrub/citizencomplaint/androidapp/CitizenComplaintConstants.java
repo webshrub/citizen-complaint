@@ -23,5 +23,5 @@ public class CitizenComplaintConstants {
     public static final String REPORTER_ID_PARAMS = "reporter_id";
     public static final String IMAGE_URI_PARAMS = "img";
     public static final String PROFILE_IMAGE_URI_PARAMS = "profile_img";
-    public static final String REPORTER_ID_VALUE = "234";
+    public static final String ADDRESS_PARAMS = "addr";
 }

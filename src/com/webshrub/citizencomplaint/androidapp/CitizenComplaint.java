@@ -19,6 +19,7 @@ public class CitizenComplaint implements Parcelable {
     private String profileThumbnailImageUri;
     private String latitude;
     private String longitude;
+    private String complaintAddress;
     private String selectedTemplateId;
     private String selectedTemplateString;
     private List<CitizenComplaintTemplate> citizenComplaintTemplates = new ArrayList<CitizenComplaintTemplate>();
@@ -78,6 +79,14 @@ public class CitizenComplaint implements Parcelable {
         this.longitude = longitude;
     }
 
+    public String getComplaintAddress() {
+        return complaintAddress;
+    }
+
+    public void setComplaintAddress(String complaintAddress) {
+        this.complaintAddress = complaintAddress;
+    }
+
     public String getSelectedTemplateId() {
         return selectedTemplateId;
     }
@@ -125,6 +134,7 @@ public class CitizenComplaint implements Parcelable {
         dest.writeString(profileThumbnailImageUri);
         dest.writeString(latitude);
         dest.writeString(longitude);
+        dest.writeString(complaintAddress);
         dest.writeString(selectedTemplateId);
         dest.writeString(selectedTemplateString);
         dest.writeList(citizenComplaintTemplates);
@@ -137,6 +147,7 @@ public class CitizenComplaint implements Parcelable {
         profileThumbnailImageUri = in.readString();
         latitude = in.readString();
         longitude = in.readString();
+        complaintAddress = in.readString();
         selectedTemplateId = in.readString();
         selectedTemplateString = in.readString();
         citizenComplaintTemplates = new ArrayList<CitizenComplaintTemplate>();
