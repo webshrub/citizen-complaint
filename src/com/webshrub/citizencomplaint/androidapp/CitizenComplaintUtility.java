@@ -1,10 +1,13 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.File;
@@ -50,5 +53,17 @@ public class CitizenComplaintUtility {
             Uri uri = Uri.parse(inputUriString);
             return uri.getSchemeSpecificPart().substring(2);
         }
+    }
+
+    public static String getDeviceIdentifier(Context context) {
+        String deviceIdentifier = null;
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telephonyManager != null) {
+            deviceIdentifier = telephonyManager.getDeviceId();
+        }
+        if (deviceIdentifier == null || deviceIdentifier.length() == 0) {
+            deviceIdentifier = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+        return deviceIdentifier;
     }
 }
