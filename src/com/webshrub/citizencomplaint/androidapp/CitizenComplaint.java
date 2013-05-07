@@ -13,6 +13,7 @@ import java.util.List;
  * Time: 1:38 PM
  */
 public class CitizenComplaint implements Parcelable {
+    private long id;
     private String complaintId;
     private String complaintCategory;
     private String selectedComplaintImageUri;
@@ -29,6 +30,14 @@ public class CitizenComplaint implements Parcelable {
 
     public CitizenComplaint(Parcel in) {
         readFromParcel(in);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getComplaintId() {
@@ -128,6 +137,7 @@ public class CitizenComplaint implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(complaintId);
         dest.writeString(complaintCategory);
         dest.writeString(selectedComplaintImageUri);
@@ -141,6 +151,7 @@ public class CitizenComplaint implements Parcelable {
     }
 
     private void readFromParcel(Parcel in) {
+        id = in.readLong();
         complaintId = in.readString();
         complaintCategory = in.readString();
         selectedComplaintImageUri = in.readString();
