@@ -44,7 +44,7 @@ public class CitizenComplaintSQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_LONGITUDE + " text,"
             + COLUMN_COMPLAINT_ADDRESS + " text,"
             + COLUMN_SELECTED_TEMPLATE_ID + " text,"
-            + COLUMN_SELECTED_TEMPLATE_STRING + " text,"
+            + COLUMN_SELECTED_TEMPLATE_STRING + " text"
             + ");";
 
     public CitizenComplaintSQLiteHelper(Context context) {
