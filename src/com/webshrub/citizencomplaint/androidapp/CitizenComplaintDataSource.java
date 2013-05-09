@@ -3,7 +3,6 @@ package com.webshrub.citizencomplaint.androidapp;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -18,43 +17,39 @@ import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintSQLiteHel
  * Time: 10:16 PM
  */
 public class CitizenComplaintDataSource {
+    private static CitizenComplaintDataSource instance;
+
     private SQLiteDatabase database;
-    private CitizenComplaintSQLiteHelper dbHelper;
 
-    public CitizenComplaintDataSource(Context context) {
-        dbHelper = new CitizenComplaintSQLiteHelper(context);
+    private CitizenComplaintDataSource(Context context) {
+        CitizenComplaintSQLiteHelper helper = new CitizenComplaintSQLiteHelper(context);
+        database = helper.getWritableDatabase();
     }
 
-    public void open() throws SQLException {
-        database = dbHelper.getWritableDatabase();
+    //no synchronized???
+    public static CitizenComplaintDataSource getInstance(Context context) {
+        if (instance == null) {
+            instance = new CitizenComplaintDataSource(context);
+        }
+        return instance;
     }
 
-    public void close() {
-        dbHelper.close();
-    }
-
-    public CitizenComplaint createCitizenComplaint(String complaintId, String complaintCategory, String selectedComplaintImageUri, String profileThumbnailImageUri, String latitude, String longitude, String complaintAddress, String selectedTemplateId, String selectedTemplateString) {
+    public long createCitizenComplaint(CitizenComplaint citizenComplaint) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_COMPLAINT_ID, complaintId);
-        values.put(COLUMN_COMPLAINT_CATEGORY, complaintCategory);
-        values.put(COLUMN_SELECTED_COMPLAINT_IMAGE_URI, selectedComplaintImageUri);
-        values.put(COLUMN_PROFILE_THUMBNAIL_IMAGE_URI, profileThumbnailImageUri);
-        values.put(COLUMN_LATITUDE, latitude);
-        values.put(COLUMN_LONGITUDE, longitude);
-        values.put(COLUMN_COMPLAINT_ADDRESS, complaintAddress);
-        values.put(COLUMN_SELECTED_TEMPLATE_ID, selectedTemplateId);
-        values.put(COLUMN_SELECTED_TEMPLATE_STRING, selectedTemplateString);
-        long insertId = database.insert(TABLE_CITIZEN_COMPLAINT, null, values);
-        Cursor cursor = database.query(TABLE_CITIZEN_COMPLAINT, ALL_COLUMNS, COLUMN_ID + " = " + insertId, null, null, null, null);
-        cursor.moveToFirst();
-        CitizenComplaint citizenComplaint = cursorToCitizenComplaint(cursor);
-        cursor.close();
-        return citizenComplaint;
+        values.put(COLUMN_COMPLAINT_ID, citizenComplaint.getComplaintId());
+        values.put(COLUMN_COMPLAINT_CATEGORY, citizenComplaint.getComplaintCategory());
+        values.put(COLUMN_SELECTED_COMPLAINT_IMAGE_URI, citizenComplaint.getSelectedComplaintImageUri());
+        values.put(COLUMN_PROFILE_THUMBNAIL_IMAGE_URI, citizenComplaint.getProfileThumbnailImageUri());
+        values.put(COLUMN_LATITUDE, citizenComplaint.getLatitude());
+        values.put(COLUMN_LONGITUDE, citizenComplaint.getLongitude());
+        values.put(COLUMN_COMPLAINT_ADDRESS, citizenComplaint.getComplaintAddress());
+        values.put(COLUMN_SELECTED_TEMPLATE_ID, citizenComplaint.getSelectedTemplateId());
+        values.put(COLUMN_SELECTED_TEMPLATE_STRING, citizenComplaint.getSelectedTemplateString());
+        return database.insert(TABLE_CITIZEN_COMPLAINT, null, values);
     }
 
     public void deleteCitizenComplaint(CitizenComplaint citizenComplaint) {
         long id = citizenComplaint.getId();
-        System.out.println("CitizenComplaint deleted with id: " + id);
         database.delete(TABLE_CITIZEN_COMPLAINT, COLUMN_ID + " = " + id, null);
     }
 
