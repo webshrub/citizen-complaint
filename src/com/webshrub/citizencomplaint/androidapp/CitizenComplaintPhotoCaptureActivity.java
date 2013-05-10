@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivity implements OnClickListener {
     private static final int IMAGE_CAPTURE_REQUEST = 100;
@@ -63,7 +64,8 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String profileThumbnailImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, "");
                 citizenComplaint.setProfileThumbnailImageUri(profileThumbnailImageUriString);
-                new CitizenComplaintInsertDetailsTask(this, citizenComplaint).execute();
+                LinearLayout progressBarLayout = (LinearLayout) findViewById(R.id.progressBarLayout);
+                new CitizenComplaintInsertDetailsTask(this, progressBarLayout, citizenComplaint).execute();
                 break;
             }
         }

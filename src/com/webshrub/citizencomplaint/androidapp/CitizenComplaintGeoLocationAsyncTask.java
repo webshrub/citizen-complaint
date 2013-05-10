@@ -4,7 +4,6 @@ import android.content.Context;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +45,6 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     public void onLocationChanged(Location location) {
-        String addressText = "Latitude = " + location.getLatitude() + ", Longitude = " + location.getLongitude();
         if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = null;
@@ -58,11 +56,9 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
             if (addresses != null && addresses.size() > 0) {
                 Address address = addresses.get(0);
                 String complaintAddress = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
-                addressText = addressText + "\n" + complaintAddress;
                 citizenComplaint.setComplaintAddress(complaintAddress);
             }
         }
-        Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
         citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
         citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
     }
