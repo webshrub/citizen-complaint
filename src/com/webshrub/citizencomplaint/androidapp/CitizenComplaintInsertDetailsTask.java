@@ -53,9 +53,9 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
             addressText = addressText + "\n" + citizenComplaint.getComplaintAddress();
         }
         Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Complaint submitted successfully.", Toast.LENGTH_SHORT).show();
         Intent newIntent = new Intent(context, CitizenComplaintHomeActivity.class);
         newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(newIntent);
-        Toast.makeText(context, "Complaint submitted successfully.", Toast.LENGTH_SHORT).show();
     }
 }
