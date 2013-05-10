@@ -1,6 +1,7 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     @Override
     protected void onPreExecute() {
         try {
+            Toast.makeText(context, "Submitting your complaint.", Toast.LENGTH_SHORT).show();
             new CitizenComplaintGeoLocationAsyncTask(context, citizenComplaint).execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,5 +44,8 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Toast.makeText(context, "Complaint submitted successfully.", Toast.LENGTH_SHORT).show();
+        Intent newIntent = new Intent(context, CitizenComplaintHomeActivity.class);
+        newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(newIntent);
     }
 }
