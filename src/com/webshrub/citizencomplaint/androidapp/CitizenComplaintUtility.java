@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Geocoder;
-import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -89,7 +88,7 @@ public class CitizenComplaintUtility {
     public static String getCompressedImagePath(String inputImagePath, int width, int height) {
         try {
             String outputImagePath = CitizenComplaintUtility.getOutputMediaFile(MEDIA_TYPE_IMAGE).getAbsolutePath();
-            Bitmap outputImage = ThumbnailUtils.extractThumbnail(CitizenComplaintBitmapHelper.decodeFile(inputImagePath, width, height, true), width, height);
+            Bitmap outputImage = CitizenComplaintBitmapHelper.decodeFile(inputImagePath, width, height, true);
             File file = new File(outputImagePath);
             file.createNewFile();
             FileOutputStream fileOutputStream = new FileOutputStream(file);
