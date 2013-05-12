@@ -11,6 +11,8 @@ public class CitizenComplaintConstants {
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
     public static final int THUMBNAIL_SIZE = 60;
+    public static final int COMPLAINT_IMAGE_WIDTH = 800;
+    public static final int COMPLAINT_IMAGE_HEIGHT = 600;
     public static final String COMPLAINT_IMAGE_URI = "COMPLAINT_IMAGE_URI";
     public static final String PROFILE_IMAGE_URI = "PROFILE_IMAGE_URI";
     public static final String PROFILE_THUMBNAIL_IMAGE_URI = "PROFILE_THUMBNAIL_IMAGE_URI";

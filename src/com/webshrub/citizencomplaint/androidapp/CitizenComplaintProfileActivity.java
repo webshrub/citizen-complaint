@@ -2,20 +2,15 @@ package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.SherlockActivity;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,7 +31,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String profileImageUriString = preferences.getString(CitizenComplaintConstants.PROFILE_IMAGE_URI, "");
+        String profileImageUriString = preferences.getString(PROFILE_IMAGE_URI, "");
         if (!profileImageUriString.equals("")) {
             profileImageUri = Uri.parse(profileImageUriString);
             ((ImageView) findViewById(R.id.imageView1)).setImageURI(profileImageUri);
@@ -50,7 +45,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
         switch (v.getId()) {
             case R.id.button1: {
                 newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                profileImageUri = CitizenComplaintUtility.getOutputMediaFileUri(CitizenComplaintConstants.MEDIA_TYPE_IMAGE);
+                profileImageUri = CitizenComplaintUtility.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 newIntent.putExtra(MediaStore.EXTRA_OUTPUT, profileImageUri);
                 startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
             }
@@ -74,10 +69,10 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                 if (resultCode == RESULT_OK) {
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
-                        String thumbnailPath = generateThumbnail(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()));
+                        String thumbnailPath = CitizenComplaintUtility.getCompressedImagePath(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
-                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
-                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
+                        preferenceEditor.putString(PROFILE_IMAGE_URI, profileImageUri.toString());
+                        preferenceEditor.putString(PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
                         preferenceEditor.commit();
                     }
                 }
@@ -87,33 +82,15 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                     profileImageUri = intent.getData();
                     if (profileImageUri != null) {
                         imageView.setImageURI(profileImageUri);
-                        String thumbnailPath = generateThumbnail(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()));
+                        String thumbnailPath = CitizenComplaintUtility.getCompressedImagePath(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
-                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_IMAGE_URI, profileImageUri.toString());
-                        preferenceEditor.putString(CitizenComplaintConstants.PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
+                        preferenceEditor.putString(PROFILE_IMAGE_URI, profileImageUri.toString());
+                        preferenceEditor.putString(PROFILE_THUMBNAIL_IMAGE_URI, thumbnailPath);
                         preferenceEditor.commit();
                     }
                 }
             default:
                 break;
         }
-    }
-
-    public String generateThumbnail(String imagePath) {
-        try {
-            String thumbnailImagePath = CitizenComplaintUtility.getOutputMediaFile(CitizenComplaintConstants.MEDIA_TYPE_IMAGE).getAbsolutePath();
-            Bitmap thumbnailImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), CitizenComplaintConstants.THUMBNAIL_SIZE, CitizenComplaintConstants.THUMBNAIL_SIZE);
-            File file = new File(thumbnailImagePath);
-            file.createNewFile();
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            thumbnailImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-            fileOutputStream.flush();
-            fileOutputStream.close();
-            return thumbnailImagePath;
-        } catch (Exception e) {
-            Log.e("Photo Upload", "Photo Upload exception: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return null;
     }
 }

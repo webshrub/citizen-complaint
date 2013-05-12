@@ -3,7 +3,10 @@ package com.webshrub.citizencomplaint.androidapp;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Geocoder;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -15,8 +18,11 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.MEDIA_TYPE_IMAGE;
 
 public class CitizenComplaintUtility {
     public static Uri getOutputMediaFileUri(int type) {
@@ -79,5 +85,23 @@ public class CitizenComplaintUtility {
 
     public static boolean isGeocoderPresent() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Geocoder.isPresent();
+    }
+
+    public static String getCompressedImagePath(String inputImagePath, int width, int height) {
+        try {
+            String outputImagePath = CitizenComplaintUtility.getOutputMediaFile(MEDIA_TYPE_IMAGE).getAbsolutePath();
+            Bitmap outputImage = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(inputImagePath), width, height);
+            File file = new File(outputImagePath);
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            outputImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            return outputImagePath;
+        } catch (Exception e) {
+            Log.e("Photo Upload", "Photo Upload exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 }
