@@ -1,11 +1,12 @@
 package com.webshrub.citizencomplaint.androidapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 /**
  * Created by IntelliJ IDEA.
@@ -48,14 +49,32 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         progressBarLayout.setVisibility(View.GONE);
-        String addressText = "Latitude = " + citizenComplaint.getLatitude() + ", Longitude = " + citizenComplaint.getLongitude();
+        StringBuffer buffer = new StringBuffer("");
+        buffer.append("Category = ").append(citizenComplaint.getComplaintCategory()).append("\n");
+        buffer.append("Complaint = ").append(citizenComplaint.getSelectedTemplateString()).append("\n");
+        buffer.append("Latitude = ").append(citizenComplaint.getLatitude()).append("\n");
+        buffer.append("Longitude = ").append(citizenComplaint.getLongitude()).append("\n");
         if (citizenComplaint.getComplaintAddress() != null && !citizenComplaint.getComplaintAddress().equals("")) {
-            addressText = addressText + "\n" + citizenComplaint.getComplaintAddress();
+            buffer.append("Address = ").append(citizenComplaint.getComplaintAddress()).append("\n");
         }
-        Toast.makeText(context, "Your location is: " + addressText, Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, "Complaint submitted successfully.", Toast.LENGTH_SHORT).show();
-        Intent newIntent = new Intent(context, CitizenComplaintHomeActivity.class);
-        newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(newIntent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(buffer)
+                .setCancelable(false)
+                .setTitle("Complaint Successful")
+                .setPositiveButton("Another Complaint", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent newIntent = new Intent(context, CitizenComplaintHomeActivity.class);
+                        newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(newIntent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
