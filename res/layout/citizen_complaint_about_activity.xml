@@ -2,6 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="About Text Goes Here."/>
+        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dp"
+                  android:text="Not happy with current quality of product and service in water, electricity, sewage and sanitation, transport, law and order, find it difficult to raise and track the issues, fear harassment, you are not alone in this city, there are around 60 lac voters like you, of those 20 lac carry smart-phone.\n\n
+First step to solve a problem is to recognise one, and then let the world know.\n\n
+Development on paper has to be in sync with development on ground, you don't find media raising civic amenities issues, take charge, let the constituency, in turn city know the civic issues in your area, issue out in 2-3 taps.\n\n
+No hassle, all citizens are equal every reported issue counts, just like voting system, no login etc. where ever you find the issue just tap out. Open data (issues) are visible to other citizens, social activists, political representatives, responsible people can be cornered based on data.\n\n
+Putting it together with RTI/Modern way of interaction google hangout/facebook/twitter, what you have is solution to improve governance.\n\n
+So, what are you thinking, be what you already are master of democratic system, this time not only on paper but for real. Open data does make a difference, participate in revolution encourage others too.\n\n
+Revolution made us as easy as watching TV, no log-in, no harassment, your feedback about the current state of civic amenities, via taps is more than enough to bring the accountability.\n\n
+Welcome to 21st century way of delivering governance.\n\n
+5 tweets a day keeps mis-governance and corruption away.\n\n
+Empowering citizens and strengthening local leadership(MLA).
+"/>
     </ScrollView>
 </RelativeLayout>

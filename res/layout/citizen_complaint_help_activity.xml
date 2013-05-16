@@ -2,6 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Help Text Goes Here."/>
+        <TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:padding="10dp"
+                  android:text="Web Portal Link:\n\n
+http://50.57.224.47/html/dev/micronews/\n\n
+Let's see the typical flow.\n\n
+1) You raise an issue for example:\n
+water:\n
+- No municipality water in the area.
+- Have to heavily rely on private water tanker, please look into it.\n
+- Water pipes are broken everywhere.\n
+- Municipality water tastes bad or smells.\n
+- Water taxes are too much.\n
+- I don't know how water comes to the city launch awareness programme.\n\n
+2) Data goes to the web server, based on the latitude/longitude goes under the correct constituency, later data is available for map analytics.\n\n
+3) Now everybody knows the state of things in this constituency, sitting in bangalore you are aware ground level realities of each constituency of delhi,top leader will be questioned, data serves better ways to build pressure, and seek amendment in constitution like right to recall, legalising civil disobedience (not paying bills), in general building common consensus among oneself, on civic amenities issue.\n\n
+4) Activist feed on the data, file RTIs to bring out the corruption in roads, water, electricity scams and also bring lethargy of department to tackle sewage sanitation effectively.\n\n
+Social Science students have proper tool to evaluate the proper government department or policy and its impact, by its effect on last node of the system (citizen).\n\n
+Basically citizens and their issue are always in limelight.\n\n
+Ground reality takes over pseudo image building.\n\n
+Just like without proper roads tranportation means we can't deliver high quality Law and Order.\n\n
+Similarly without information technology assisted mass involvement, we can't deliver governance.\n\n
+5) Based on the data we have pre-scheduled google+ hangout (virtual town hall community) to question local leader (MLA) decide MLA's future.\n\n
+Each one is now reporter of status(quality) of civic amenities, together we cover state of civic amenities in the city.\n\n
+...... Just Do It .....
+"/>
     </ScrollView>
 </RelativeLayout>
