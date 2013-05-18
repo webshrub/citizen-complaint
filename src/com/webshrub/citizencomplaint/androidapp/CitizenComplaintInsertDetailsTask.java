@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,16 +51,25 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
         progressBarLayout.setVisibility(View.GONE);
-        StringBuffer buffer = new StringBuffer("");
-        buffer.append("Category = ").append(citizenComplaint.getComplaintCategory()).append("\n");
-        buffer.append("Complaint = ").append(citizenComplaint.getSelectedTemplateString()).append("\n");
-        buffer.append("Latitude = ").append(citizenComplaint.getLatitude()).append("\n");
-        buffer.append("Longitude = ").append(citizenComplaint.getLongitude()).append("\n");
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.dialog, null);
+        TextView complaintCategory = (TextView) view.findViewById(R.id.complaintCategoryTextView);
+        complaintCategory.setText(citizenComplaint.getComplaintCategory());
+        TextView issueLevel = (TextView) view.findViewById(R.id.issueLevelTextView);
+        issueLevel.setText("Lack Of Infrastructure");
+        TextView templateString = (TextView) view.findViewById(R.id.templateStringTextView);
+        templateString.setText(citizenComplaint.getSelectedTemplateString());
+        TextView latLong = (TextView) view.findViewById(R.id.latLongTextView);
+        latLong.setText(citizenComplaint.getLatitude() + "/" + citizenComplaint.getLongitude());
+        TextView complaintAddress = (TextView) view.findViewById(R.id.complaintAddressTextView);
+        complaintAddress.setText(citizenComplaint.getComplaintAddress());
         if (citizenComplaint.getComplaintAddress() != null && !citizenComplaint.getComplaintAddress().equals("")) {
-            buffer.append("Address = ").append(citizenComplaint.getComplaintAddress()).append("\n");
+            complaintAddress.setText(citizenComplaint.getComplaintAddress());
+        } else {
+            complaintAddress.setText("India");
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(buffer)
+        builder.setView(view)
                 .setCancelable(false)
                 .setTitle("Complaint Successful")
                 .setPositiveButton("Another Complaint", new DialogInterface.OnClickListener() {

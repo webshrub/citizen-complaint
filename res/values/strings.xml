@@ -38,11 +38,13 @@
         <item>Increase constable/Inspector salary, bribery is rising.</item>
         <item>Police is not working hard enough to reach to people.</item>
         <item>High level of distrust on police.</item>
-        <item>Should not be there a police awareness day, once in 3 months, where citizen should be encouraged to review their police stations, if they are
+        <item>Should not be there a police awareness day, once in 3 months, where citizen should be encouraged to review
+            their police stations, if they are
             happy with services of staff.
         </item>
         <item>Court system sucks, i want to bow out of contract of signing the constitution.</item>
-        <item>Should not there be a court awareness day, once in 3 months, where citizens should be encouraged to review their courts, to check that they are
+        <item>Should not there be a court awareness day, once in 3 months, where citizens should be encouraged to review
+            their courts, to check that they are
             happy with services of the staff.
         </item>
         <item>@string/otherTypeOfComplaint</item>
@@ -156,7 +158,8 @@
         <item>Road is in bad shape.</item>
         <item>These Roads are dirty all the time, do somethings.</item>
         <item>Road tax too much.</item>
-        <item>How these road tenders get allocated, as citizen we need to know, please launch a awareness programme.</item>
+        <item>How these road tenders get allocated, as citizen we need to know, please launch a awareness programme.
+        </item>
         <item>No cleanliness, launch an awareness programme on how citizens can help.</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
@@ -204,4 +207,12 @@
     <string name="otherTypeOfComplaint">Other complaints..</string>
     <string name="action_label_rate_us">Rate us</string>
     <string name="action_label_settings">Settings</string>
+    <string name="governanceMessage">Together we deliver governance. Sarvajan Hitay, Sarvajan Sukhay</string>
+    <string name="thankYouMessage">Thank you for contacting us. We will soon look into the matter.</string>
+    <string name="issueType">Category:</string>
+    <string name="systemLevel">System Level:</string>
+    <string name="complaintText">Actual Text:</string>
+    <string name="latLong">Latitude/Longitude:</string>
+    <string name="complaintAddress">Address:</string>
+    <string name="mlaPicDescription">Pic of MLA of the area</string>
 </resources>
