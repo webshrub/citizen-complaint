@@ -1,14 +1,14 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.Window;
 import android.widget.TextView;
 
 /**
@@ -21,17 +21,17 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     private Context context;
     private CitizenComplaint citizenComplaint;
     private CitizenComplaintDataSource citizenComplaintDataSource;
-    private ProgressDialog progressDialog;
+    private Dialog progressDialog;
 
     public CitizenComplaintInsertDetailsTask(Context context, CitizenComplaint citizenComplaint) {
         this.context = context;
         this.citizenComplaint = citizenComplaint;
         citizenComplaintDataSource = CitizenComplaintDataSource.getInstance(context);
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new Dialog(context);
+        progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Getting your location..");
-        progressDialog.setTitle("Please wait");
-        progressDialog.setIndeterminate(true);
+        progressDialog.setContentView(R.layout.citizen_complaint_progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     @SuppressWarnings("unchecked")
