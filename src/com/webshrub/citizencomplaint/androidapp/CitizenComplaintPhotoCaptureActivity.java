@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
@@ -67,8 +66,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String profileThumbnailImageUriString = preferences.getString(PROFILE_THUMBNAIL_IMAGE_URI, "");
                 citizenComplaint.setProfileThumbnailImageUri(profileThumbnailImageUriString);
-                LinearLayout progressBarLayout = (LinearLayout) findViewById(R.id.progressBarLayout);
-                new CitizenComplaintInsertDetailsTask(this, progressBarLayout, citizenComplaint).execute();
+                new CitizenComplaintInsertDetailsTask(this, citizenComplaint).execute();
                 break;
             }
         }

@@ -1,6 +1,7 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,22 +19,26 @@ import android.widget.TextView;
  */
 public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Void> {
     private Context context;
-    private LinearLayout progressBarLayout;
     private CitizenComplaint citizenComplaint;
     private CitizenComplaintDataSource citizenComplaintDataSource;
+    private ProgressDialog progressDialog;
 
-    public CitizenComplaintInsertDetailsTask(Context context, LinearLayout progressBarLayout, CitizenComplaint citizenComplaint) {
+    public CitizenComplaintInsertDetailsTask(Context context, CitizenComplaint citizenComplaint) {
         this.context = context;
-        this.progressBarLayout = progressBarLayout;
         this.citizenComplaint = citizenComplaint;
         citizenComplaintDataSource = CitizenComplaintDataSource.getInstance(context);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Getting your location..");
+        progressDialog.setTitle("Please wait");
+        progressDialog.setIndeterminate(true);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onPreExecute() {
         try {
-            progressBarLayout.setVisibility(View.VISIBLE);
+            progressDialog.show();
             new CitizenComplaintGeoLocationAsyncTask(context, citizenComplaint).execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +55,9 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-        progressBarLayout.setVisibility(View.GONE);
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.dialog, null);
         TextView complaintCategory = (TextView) view.findViewById(R.id.complaintCategoryTextView);
