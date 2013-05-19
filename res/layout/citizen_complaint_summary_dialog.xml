@@ -4,10 +4,10 @@
             android:layout_height="fill_parent">
 
     <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:gravity="center"
@@ -18,54 +18,54 @@
                       android:layout_marginTop="10dp">
 
             <TableLayout
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="1">
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/governanceMessage"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/governanceMessage"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/thankYouMessage"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/thankYouMessage"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
             </TableLayout>
 
             <ImageView
-                android:layout_width="100dip"
-                android:layout_height="100dip"
-                android:adjustViewBounds="false"
-                android:scaleType="fitCenter"
-                android:src="@drawable/mla"
-                android:background="#cc0000"
-                android:layout_marginRight="5dp"
-                android:contentDescription="@string/mlaPicDescription"/>
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:adjustViewBounds="false"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mla"
+                    android:background="#cc0000"
+                    android:layout_marginRight="5dp"
+                    android:contentDescription="@string/mlaPicDescription"/>
         </LinearLayout>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -73,163 +73,162 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      android:padding="5dp"
-            >
+                      android:layout_marginTop="10dp">
 
             <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
-
-                <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/issueType"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"/>
+                <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        >
 
                     <TextView
-                        android:id="@+id/complaintCategoryTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/issueType"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"/>
+
+                    <TextView
+                            android:id="@+id/complaintCategoryTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    >
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/systemLevel"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/systemLevel"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/issueLevelTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:id="@+id/issueLevelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    >
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/complaintText"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/complaintText"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/templateStringTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:id="@+id/templateStringTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    >
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/latLong"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/latLong"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/latLongTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:id="@+id/latLongTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
 
                 <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    >
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:text="@string/complaintAddress"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/complaintAddress"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/complaintAddressTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="12sp"
-                        android:layout_weight="1"/>
+                            android:id="@+id/complaintAddressTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="12sp"
+                            android:layout_weight="1"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
