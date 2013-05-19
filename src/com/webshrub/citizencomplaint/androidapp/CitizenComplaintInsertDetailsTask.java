@@ -59,7 +59,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
             progressDialog.dismiss();
         }
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.dialog, null);
+        View view = layoutInflater.inflate(R.layout.citizen_complaint_summary_dialog, null);
         TextView complaintCategory = (TextView) view.findViewById(R.id.complaintCategoryTextView);
         complaintCategory.setText(citizenComplaint.getComplaintCategory());
         TextView issueLevel = (TextView) view.findViewById(R.id.issueLevelTextView);
