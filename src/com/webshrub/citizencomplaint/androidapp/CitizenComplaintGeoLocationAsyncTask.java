@@ -45,6 +45,7 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
 
     @Override
     public void onLocationChanged(Location location) {
+        citizenComplaint.setComplaintAddress("India");
         if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = null;
@@ -59,6 +60,7 @@ public class CitizenComplaintGeoLocationAsyncTask extends AsyncTask<Void, Void, 
                 citizenComplaint.setComplaintAddress(complaintAddress);
             }
         }
+        //Important to have these two lines at the last because of thread synchronization.
         citizenComplaint.setLatitude(Double.toString(location.getLatitude()));
         citizenComplaint.setLongitude(Double.toString(location.getLongitude()));
     }

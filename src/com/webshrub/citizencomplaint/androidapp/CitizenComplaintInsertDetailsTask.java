@@ -74,11 +74,6 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
         latLong.setText(citizenComplaint.getLatitude() + "/" + citizenComplaint.getLongitude());
         TextView complaintAddress = (TextView) view.findViewById(R.id.complaintAddressTextView);
         complaintAddress.setText(citizenComplaint.getComplaintAddress());
-        if (citizenComplaint.getComplaintAddress() != null && !citizenComplaint.getComplaintAddress().equals("")) {
-            complaintAddress.setText(citizenComplaint.getComplaintAddress());
-        } else {
-            complaintAddress.setText("India");
-        }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view)
                 .setCancelable(false)
