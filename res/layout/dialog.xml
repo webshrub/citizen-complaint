@@ -62,7 +62,7 @@
                 android:layout_height="100dip"
                 android:adjustViewBounds="false"
                 android:scaleType="fitCenter"
-                android:src="@drawable/camera"
+                android:src="@drawable/mla"
                 android:background="#cc0000"
                 android:layout_marginRight="5dp"
                 android:contentDescription="@string/mlaPicDescription"/>
@@ -73,6 +73,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
+                      android:padding="5dp"
             >
 
             <TableLayout
