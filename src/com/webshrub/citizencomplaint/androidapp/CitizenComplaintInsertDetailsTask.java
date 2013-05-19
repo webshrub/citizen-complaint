@@ -65,15 +65,15 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Voi
         TextView issueLevel = (TextView) view.findViewById(R.id.issueLevelTextView);
         Integer templateId = Integer.parseInt(citizenComplaint.getSelectedTemplateId());
         if (templateId >= 0 && templateId <= 9) {
-            issueLevel.setText("Lack Of Infrastructure");
+            issueLevel.setText(context.getResources().getString(R.string.lackOfInfrastructure));
         } else if (templateId >= 10 && templateId <= 19) {
-            issueLevel.setText("Lack Of Maintenance");
+            issueLevel.setText(context.getResources().getString(R.string.lackOfMaintenance));
         } else if (templateId >= 20 && templateId <= 29) {
-            issueLevel.setText("Lack Of Quality Staff");
+            issueLevel.setText(context.getResources().getString(R.string.lackOfQualityStaff));
         } else if (templateId >= 30 && templateId <= 39) {
-            issueLevel.setText("Predatory Pricing");
+            issueLevel.setText(context.getResources().getString(R.string.exorbitantPricing));
         } else if (templateId >= 40 && templateId <= 49) {
-            issueLevel.setText("Lack Of Awareness");
+            issueLevel.setText(context.getResources().getString(R.string.lackOfAwareness));
         }
         TextView templateString = (TextView) view.findViewById(R.id.templateStringTextView);
         templateString.setText(citizenComplaint.getSelectedTemplateString());
