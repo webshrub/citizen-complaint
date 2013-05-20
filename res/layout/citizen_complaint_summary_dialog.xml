@@ -85,7 +85,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="5dp"
-                        android:text="Marlon Brando, MLA/ANEKAL"
+                        android:text="Manmohan Singh, PM/India"
                         android:textColor="@android:color/black"
                         android:textSize="12sp"
                         android:layout_weight="1"/>
