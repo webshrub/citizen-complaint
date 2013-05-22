@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.*;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
         }
         locationManager.removeUpdates(this);
         citizenComplaintDataSource.createCitizenComplaint(citizenComplaint);
-        JSONObject jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS + "?" + LAT_PARAMS + "=" + citizenComplaint.getLatitude() + "&" + LONG_PARAMS + "=" + citizenComplaint.getLongitude());
+        JSONObject jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS + "?" + LATTITUDE_PARAMS + "=" + citizenComplaint.getLatitude() + "&" + LONGITUDE_PARAMS + "=" + citizenComplaint.getLongitude());
         try {
             String constituencyId = jsonResponse.getString(CONSTITUENCY_ID_PARAMS);
             jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS + "/" + constituencyId);
@@ -81,7 +82,8 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
             String mlaName = node.getString(MLA_NAME_PARAMS);
             String mlaConstituency = node.getString(CONSTITUENCY_PARAMS);
             Bitmap mlaImage = CitizenComplaintHttpUtil.getBitmapFromUrl(imageUrl);
-            return new CitizenComplaintMLADetails(mlaName, mlaConstituency, mlaImage);
+            Uri mlaImageUri = CitizenComplaintUtility.saveBitmapToFileSystem(mlaImage);
+            return new CitizenComplaintMLADetails(mlaName, mlaConstituency, mlaImageUri);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,7 +101,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
         TextView mlaNameConstituency = (TextView) view.findViewById(R.id.mlaNameConstituencyTextView);
         mlaNameConstituency.setText(citizenComplaintMLADetails.getMlaName() + ", MLA/" + citizenComplaintMLADetails.getMlaConstituency());
         ImageView mlaImage = (ImageView) view.findViewById(R.id.mlaImageView);
-        mlaImage.setImageBitmap(citizenComplaintMLADetails.getMlaImage());
+        mlaImage.setImageURI(citizenComplaintMLADetails.getMlaImageUri());
         TextView complaintCategory = (TextView) view.findViewById(R.id.complaintCategoryTextView);
         complaintCategory.setText(citizenComplaint.getComplaintCategory());
         TextView issueLevel = (TextView) view.findViewById(R.id.issueLevelTextView);

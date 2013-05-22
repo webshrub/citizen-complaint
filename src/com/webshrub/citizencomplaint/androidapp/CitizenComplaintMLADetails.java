@@ -1,16 +1,16 @@
 package com.webshrub.citizencomplaint.androidapp;
 
-import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class CitizenComplaintMLADetails {
     private String mlaName;
     private String mlaConstituency;
-    private Bitmap mlaImage;
+    private Uri mlaImageUri;
 
-    public CitizenComplaintMLADetails(String mlaName, String mlaConstituency, Bitmap mlaImage) {
+    public CitizenComplaintMLADetails(String mlaName, String mlaConstituency, Uri mlaImageUri) {
         this.mlaName = mlaName;
         this.mlaConstituency = mlaConstituency;
-        this.mlaImage = mlaImage;
+        this.mlaImageUri = mlaImageUri;
     }
 
     public String getMlaName() {
@@ -29,11 +29,11 @@ public class CitizenComplaintMLADetails {
         this.mlaConstituency = mlaConstituency;
     }
 
-    public Bitmap getMlaImage() {
-        return mlaImage;
+    public Uri getMlaImageUri() {
+        return mlaImageUri;
     }
 
-    public void setMlaImage(Bitmap mlaImage) {
-        this.mlaImage = mlaImage;
+    public void setMlaImageUri(Uri mlaImageUri) {
+        this.mlaImageUri = mlaImageUri;
     }
 }

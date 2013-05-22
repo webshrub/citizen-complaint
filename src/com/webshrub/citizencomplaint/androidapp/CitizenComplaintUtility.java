@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,10 @@ import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants
 public class CitizenComplaintUtility {
     public static Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    public static Uri getOutputMediaFileUri(File file) {
+        return Uri.fromFile(file);
     }
 
     public static File getOutputMediaFile(int type) {
@@ -46,7 +51,6 @@ public class CitizenComplaintUtility {
         }
         return mediaFile;
     }
-
 
     @SuppressWarnings("deprecation")
     public static String getAbsoluteFilePath(Activity activity, String inputUriString) {
@@ -87,7 +91,7 @@ public class CitizenComplaintUtility {
 
     public static String getCompressedImagePath(String inputImagePath, int width, int height) {
         try {
-            String outputImagePath = CitizenComplaintUtility.getOutputMediaFile(MEDIA_TYPE_IMAGE).getAbsolutePath();
+            String outputImagePath = getOutputMediaFile(MEDIA_TYPE_IMAGE).getAbsolutePath();
             Bitmap outputImage = CitizenComplaintBitmapHelper.decodeFile(inputImagePath, width, height, true);
             File file = new File(outputImagePath);
             file.createNewFile();
@@ -97,7 +101,24 @@ public class CitizenComplaintUtility {
             fileOutputStream.close();
             return outputImagePath;
         } catch (Exception e) {
-            Log.e("Photo Upload", "Photo Upload exception: " + e.getMessage());
+            Log.e("Photo Compression", "Photo Compression exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Uri saveBitmapToFileSystem(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        try {
+            File file = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(bytes.toByteArray());
+            fileOutputStream.close();
+            return getOutputMediaFileUri(file);
+        } catch (Exception e) {
+            Log.e("Photo Save", "Photo Save exception: " + e.getMessage());
             e.printStackTrace();
         }
         return null;

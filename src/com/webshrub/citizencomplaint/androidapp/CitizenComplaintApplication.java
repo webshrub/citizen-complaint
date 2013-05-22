@@ -64,10 +64,16 @@ public class CitizenComplaintApplication extends Application {
                     multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintUtility.getDeviceIdentifier(getApplicationContext())));
                     multipartEntity.addPart(CitizenComplaintConstants.ADDRESS_PARAMS, new StringBody("" + citizenComplaint.getComplaintAddress()));
                     if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
-                        multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(new File(citizenComplaint.getSelectedComplaintImageUri())));
+                        File file = new File(citizenComplaint.getSelectedComplaintImageUri());
+                        if (file.exists()) {
+                            multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(file));
+                        }
                     }
                     if (citizenComplaint.getProfileThumbnailImageUri() != null && !citizenComplaint.getProfileThumbnailImageUri().equals("")) {
-                        multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(new File(citizenComplaint.getProfileThumbnailImageUri())));
+                        File file = new File(citizenComplaint.getProfileThumbnailImageUri());
+                        if (file.exists()) {
+                            multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(file));
+                        }
                     }
                     httppost.setEntity(multipartEntity);
                     httpClient.execute(httppost, new CitizenComplaintUploadResponseHandler());

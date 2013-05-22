@@ -30,10 +30,8 @@ public class CitizenComplaintConstants {
     public static final String ADDRESS_PARAMS = "addr";
     public static final String CONSTITUENCY_ID_PARAMS = "consti_id";
     public static final String NODES_PARAMS = "nodes";
-    public static final String IMAGE_PARAMS = "Image";
-    public static final String MLA_NAME_PARAMS = "MLA Name";
-    public static final String CONSTITUENCY_PARAMS = "Constituency";
+    public static final String IMAGE_PARAMS = "image";
+    public static final String MLA_NAME_PARAMS = "mla_name";
+    public static final String CONSTITUENCY_PARAMS = "constituency";
     public static final String NODE_PARAMS = "node";
-    public static final String LAT_PARAMS = "lat";
-    public static final String LONG_PARAMS = "long";
 }
