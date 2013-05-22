@@ -79,13 +79,13 @@
                     android:layout_height="fill_parent">
 
                     <TextView
+                        android:id="@+id/mlaNameConstituencyTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="5dp"
-                        android:text="Manmohan Singh, PM/India"
                         android:textColor="@android:color/black"
                         android:textSize="12sp"
                         android:layout_weight="1"/>
@@ -93,6 +93,7 @@
             </TableLayout>
 
             <ImageView
+                android:id="@+id/mlaImageView"
                 android:layout_width="100dip"
                 android:layout_height="100dip"
                 android:adjustViewBounds="false"

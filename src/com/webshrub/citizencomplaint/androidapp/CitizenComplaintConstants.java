@@ -16,7 +16,9 @@ public class CitizenComplaintConstants {
     public static final String COMPLAINT_IMAGE_URI = "COMPLAINT_IMAGE_URI";
     public static final String PROFILE_IMAGE_URI = "PROFILE_IMAGE_URI";
     public static final String PROFILE_THUMBNAIL_IMAGE_URI = "PROFILE_THUMBNAIL_IMAGE_URI";
-    public static final String CITIZEN_COMPLAINT_HOST = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
+    public static final String CITIZEN_COMPLAINT_POST_URL_PARAMS = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
+    public static final String CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS = "http://50.57.224.47/html/dev/micronews/getmlaid";
+    public static final String CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS = "http://50.57.224.47/html/dev/micronews/mla-info";
     public static final String LATTITUDE_PARAMS = "lat";
     public static final String LONGITUDE_PARAMS = "long";
     public static final String ISSUE_TYPE_PARAMS = "issue_type";
@@ -26,4 +28,12 @@ public class CitizenComplaintConstants {
     public static final String IMAGE_URI_PARAMS = "img";
     public static final String PROFILE_IMAGE_URI_PARAMS = "profile_img";
     public static final String ADDRESS_PARAMS = "addr";
+    public static final String CONSTITUENCY_ID_PARAMS = "consti_id";
+    public static final String NODES_PARAMS = "nodes";
+    public static final String IMAGE_PARAMS = "Image";
+    public static final String MLA_NAME_PARAMS = "MLA Name";
+    public static final String CONSTITUENCY_PARAMS = "Constituency";
+    public static final String NODE_PARAMS = "node";
+    public static final String LAT_PARAMS = "lat";
+    public static final String LONG_PARAMS = "long";
 }

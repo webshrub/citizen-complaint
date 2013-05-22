@@ -54,7 +54,7 @@ public class CitizenComplaintApplication extends Application {
                     HttpParams httpParams = new BasicHttpParams();
                     httpParams.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
                     DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
-                    HttpPost httppost = new HttpPost(CitizenComplaintConstants.CITIZEN_COMPLAINT_HOST);
+                    HttpPost httppost = new HttpPost(CitizenComplaintConstants.CITIZEN_COMPLAINT_POST_URL_PARAMS);
                     MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                     multipartEntity.addPart(CitizenComplaintConstants.LATTITUDE_PARAMS, new StringBody("" + citizenComplaint.getLatitude()));
                     multipartEntity.addPart(CitizenComplaintConstants.LONGITUDE_PARAMS, new StringBody("" + citizenComplaint.getLongitude()));
