@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintSQLiteHel
  */
 public class CitizenComplaintDataSource {
     private static CitizenComplaintDataSource instance;
-
     private SQLiteDatabase database;
 
     private CitizenComplaintDataSource(Context context) {
@@ -48,6 +48,17 @@ public class CitizenComplaintDataSource {
         return database.insert(TABLE_CITIZEN_COMPLAINT, null, values);
     }
 
+    public long createMLADetail(CitizenComplaintMLADetails mlaDetails) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MLA_NAME, mlaDetails.getMlaName());
+        values.put(COLUMN_MLA_EMAIL, mlaDetails.getMlaEmail());
+        values.put(COLUMN_MLA_CONTACT_NO, mlaDetails.getMlaContactNo());
+        values.put(COLUMN_MLA_CONSTITUENCY_ID, mlaDetails.getMlaConstituencyId());
+        values.put(COLUMN_MLA_CONSTITUENCY, mlaDetails.getMlaConstituency());
+        values.put(COLUMN_MLA_IMAGE_URI, mlaDetails.getMlaImageUri().toString());
+        return database.insert(TABLE_MLA_DETAIL, null, values);
+    }
+
     public void deleteCitizenComplaint(CitizenComplaint citizenComplaint) {
         long id = citizenComplaint.getId();
         database.delete(TABLE_CITIZEN_COMPLAINT, COLUMN_ID + " = " + id, null);
@@ -55,7 +66,7 @@ public class CitizenComplaintDataSource {
 
     public List<CitizenComplaint> getAllCitizenComplaints() {
         List<CitizenComplaint> citizenComplaints = new ArrayList<CitizenComplaint>();
-        Cursor cursor = database.query(TABLE_CITIZEN_COMPLAINT, ALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_CITIZEN_COMPLAINT, COLUMNS_CITIZEN_COMPLAINT, null, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             CitizenComplaint citizenComplaint = cursorToCitizenComplaint(cursor);
@@ -80,5 +91,27 @@ public class CitizenComplaintDataSource {
         citizenComplaint.setSelectedTemplateId(cursor.getString(8));
         citizenComplaint.setSelectedTemplateString(cursor.getString(9));
         return citizenComplaint;
+    }
+
+    private CitizenComplaintMLADetails cursorToMLADetails(Cursor cursor) {
+        CitizenComplaintMLADetails mlaDetails = new CitizenComplaintMLADetails();
+        mlaDetails.setId(cursor.getLong(0));
+        mlaDetails.setMlaName(cursor.getString(1));
+        mlaDetails.setMlaEmail(cursor.getString(2));
+        mlaDetails.setMlaContactNo(cursor.getString(3));
+        mlaDetails.setMlaConstituencyId(cursor.getString(4));
+        mlaDetails.setMlaConstituency(cursor.getString(5));
+        mlaDetails.setMlaImageUri(Uri.parse(cursor.getString(6)));
+        return mlaDetails;
+    }
+
+    public CitizenComplaintMLADetails getMLADetailsByConstituencyId(String constituencyId) {
+        Cursor cursor = database.query(TABLE_MLA_DETAIL, COLUMNS_MLA_DETAIL, COLUMN_MLA_CONSTITUENCY_ID + "=?", new String[]{constituencyId}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            CitizenComplaintMLADetails mlaDetails = cursorToMLADetails(cursor);
+            cursor.close();
+            return mlaDetails;
+        }
+        return null;
     }
 }

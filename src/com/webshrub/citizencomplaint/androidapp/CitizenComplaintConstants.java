@@ -32,6 +32,8 @@ public class CitizenComplaintConstants {
     public static final String NODES_PARAMS = "nodes";
     public static final String IMAGE_PARAMS = "image";
     public static final String MLA_NAME_PARAMS = "mla_name";
-    public static final String CONSTITUENCY_PARAMS = "constituency";
+    public static final String MLA_EMAIL_PARAMS = "mla_email";
+    public static final String MLA_CONTACT_NO_PARAMS = "mla_contact_no";
+    public static final String MLA_CONSTITUENCY_PARAMS = "constituency";
     public static final String NODE_PARAMS = "node";
 }

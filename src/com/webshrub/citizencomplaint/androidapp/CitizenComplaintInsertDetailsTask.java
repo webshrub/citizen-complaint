@@ -75,15 +75,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
         JSONObject jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS + "?" + LATTITUDE_PARAMS + "=" + citizenComplaint.getLatitude() + "&" + LONGITUDE_PARAMS + "=" + citizenComplaint.getLongitude());
         try {
             String constituencyId = jsonResponse.getString(CONSTITUENCY_ID_PARAMS);
-            jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS + "/" + constituencyId);
-            JSONArray nodes = jsonResponse.getJSONArray(NODES_PARAMS);
-            JSONObject node = nodes.getJSONObject(0).getJSONObject(NODE_PARAMS);
-            String imageUrl = node.getString(IMAGE_PARAMS);
-            String mlaName = node.getString(MLA_NAME_PARAMS);
-            String mlaConstituency = node.getString(CONSTITUENCY_PARAMS);
-            Bitmap mlaImage = CitizenComplaintHttpUtil.getBitmapFromUrl(imageUrl);
-            Uri mlaImageUri = CitizenComplaintUtility.saveBitmapToFileSystem(mlaImage);
-            return new CitizenComplaintMLADetails(mlaName, mlaConstituency, mlaImageUri);
+            return getOrCreateMLADetails(constituencyId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -176,5 +168,25 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
 
     @Override
     public void onProviderDisabled(String s) {
+    }
+
+    private CitizenComplaintMLADetails getOrCreateMLADetails(String mlaConstituencyId) throws JSONException {
+        JSONObject jsonResponse;
+        CitizenComplaintMLADetails mlaDetails = citizenComplaintDataSource.getMLADetailsByConstituencyId(mlaConstituencyId);
+        if (mlaDetails == null) {
+            jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS + "/" + mlaConstituencyId);
+            JSONArray nodes = jsonResponse.getJSONArray(NODES_PARAMS);
+            JSONObject node = nodes.getJSONObject(0).getJSONObject(NODE_PARAMS);
+            String imageUrl = node.getString(IMAGE_PARAMS);
+            String mlaName = node.getString(MLA_NAME_PARAMS);
+            String mlaEmail = node.getString(MLA_EMAIL_PARAMS);
+            String mlaContactNo = node.getString(MLA_CONTACT_NO_PARAMS);
+            String mlaConstituency = node.getString(MLA_CONSTITUENCY_PARAMS);
+            Bitmap mlaImage = CitizenComplaintHttpUtil.getBitmapFromUrl(imageUrl);
+            Uri mlaImageUri = CitizenComplaintUtility.saveBitmapToFileSystem(mlaImage);
+            mlaDetails = new CitizenComplaintMLADetails(mlaName, mlaEmail, mlaContactNo, mlaConstituencyId, mlaConstituency, mlaImageUri);
+            citizenComplaintDataSource.createMLADetail(mlaDetails);
+        }
+        return mlaDetails;
     }
 }
