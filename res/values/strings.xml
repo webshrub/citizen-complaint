@@ -223,4 +223,7 @@
     <string name="takeAPic">Take a Pic</string>
     <string name="pickExisting">Pick Existing</string>
     <string name="send">Send</string>
+    <string name="enableLocationServices">Enable Location Services</string>
+    <string name="locationProvidersDisabled">Location providers not enabled. Would you like to enable them?</string>
+    <string name="enable">Enable</string>
 </resources>

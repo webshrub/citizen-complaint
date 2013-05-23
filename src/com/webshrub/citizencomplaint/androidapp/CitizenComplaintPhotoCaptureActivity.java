@@ -1,11 +1,16 @@
 package com.webshrub.citizencomplaint.androidapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -96,5 +101,30 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if the GPS setting is currently enabled on the device. This verification should be done during onStart() because the system calls this method
+        // when the user returns to the activity, which ensures the desired location provider is enabled each time the activity resumes from the stopped state.
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            showSettingsDialog();
+        }
+    }
+
+    public void showSettingsDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setCancelable(false);
+        alertDialog.setTitle(getString(R.string.enableLocationServices));
+        alertDialog.setMessage(getString(R.string.locationProvidersDisabled));
+        alertDialog.setPositiveButton(getString(R.string.enable), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        alertDialog.show();
     }
 }
