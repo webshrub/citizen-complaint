@@ -125,12 +125,6 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
                         newIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(newIntent);
                     }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
                 });
         AlertDialog alert = builder.create();
         alert.show();
