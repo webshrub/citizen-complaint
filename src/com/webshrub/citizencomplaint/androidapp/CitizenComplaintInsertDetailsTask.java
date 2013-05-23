@@ -139,7 +139,7 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
     @Override
     public void onLocationChanged(Location location) {
         citizenComplaint.setComplaintAddress("India");
-        if (CitizenComplaintUtility.isGeocoderPresent() && CitizenComplaintUtility.isDeviceOnline(context)) {
+        if (CitizenComplaintUtility.isGeocoderPresent()) {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = null;
             try {
