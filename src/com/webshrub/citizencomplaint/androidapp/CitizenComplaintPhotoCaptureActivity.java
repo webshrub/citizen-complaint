@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
@@ -24,6 +25,11 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
+        CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CITIZEN_COMPLAINT);
+        TextView category = (TextView) findViewById(R.id.categoryTextView);
+        category.setText(citizenComplaint.getComplaintCategory());
+        TextView complaint = (TextView) findViewById(R.id.complaintTextView);
+        complaint.setText(citizenComplaint.getSelectedTemplateString());
         if (savedInstanceState != null && savedInstanceState.containsKey(COMPLAINT_IMAGE_URI)) {
             imageUri = Uri.parse(savedInstanceState.getString(COMPLAINT_IMAGE_URI));
             ((ImageView) findViewById(R.id.imageView1)).setImageURI(imageUri);
@@ -58,7 +64,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             }
             break;
             case R.id.button3: {
-                CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CITIZEN_COMPLAINT));
+                CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CITIZEN_COMPLAINT);
                 if (imageUri != null) {
                     String compressedImagePath = CitizenComplaintUtility.getCompressedImagePath(CitizenComplaintUtility.getAbsoluteFilePath(this, imageUri.toString()), COMPLAINT_IMAGE_WIDTH, COMPLAINT_IMAGE_HEIGHT);
                     citizenComplaint.setSelectedComplaintImageUri(compressedImagePath);
