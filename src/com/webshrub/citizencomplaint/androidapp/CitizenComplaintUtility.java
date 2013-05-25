@@ -18,7 +18,6 @@ import android.util.Log;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -83,19 +82,7 @@ public class CitizenComplaintUtility {
     public static boolean isDeviceOnline(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo == null) {
-            return false;
-        }
-        if (networkInfo.isAvailable() && networkInfo.isConnected()) {
-            try {
-                InetAddress inetAddress = InetAddress.getByName(CitizenComplaintConstants.GOOGLE);
-                return inetAddress.isReachable(1000);
-            } catch (Exception ignored) {
-            }
-            return false;
-        } else {
-            return false;
-        }
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 
     public static boolean isGeocoderPresent() {

@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -63,20 +63,23 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
     @SuppressWarnings("unchecked")
     @Override
     protected CitizenComplaintMLADetails doInBackground(Void... params) {
-        while (citizenComplaint.getLatitude() == null || citizenComplaint.getLongitude() == null) {
-            try {
-                Thread.sleep(99);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        locationManager.removeUpdates(this);
-        citizenComplaintDataSource.createCitizenComplaint(citizenComplaint);
-        JSONObject jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS + "?" + LATTITUDE_PARAMS + "=" + citizenComplaint.getLatitude() + "&" + LONGITUDE_PARAMS + "=" + citizenComplaint.getLongitude());
         try {
-            String constituencyId = jsonResponse.getString(CONSTITUENCY_ID_PARAMS);
-            return getOrCreateMLADetails(constituencyId);
-        } catch (JSONException e) {
+            while (citizenComplaint.getLatitude() == null || citizenComplaint.getLongitude() == null) {
+                if (!CitizenComplaintUtility.isDeviceOnline(context)) {
+                    locationManager.removeUpdates(this);
+                    return null;
+                } else {
+                    Thread.sleep(99);
+                }
+            }
+            locationManager.removeUpdates(this);
+            citizenComplaintDataSource.createCitizenComplaint(citizenComplaint);
+            JSONObject jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(context, CITIZEN_COMPLAINT_GET_MLA_ID_URL_PARAMS + "?" + LATTITUDE_PARAMS + "=" + citizenComplaint.getLatitude() + "&" + LONGITUDE_PARAMS + "=" + citizenComplaint.getLongitude());
+            if (jsonResponse != null) {
+                String constituencyId = jsonResponse.getString(CONSTITUENCY_ID_PARAMS);
+                return getOrCreateMLADetails(constituencyId);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -88,7 +91,11 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        showSummaryDialog(citizenComplaintMLADetails);
+        if (citizenComplaintMLADetails != null) {
+            showSummaryDialog(citizenComplaintMLADetails);
+        } else {
+            Toast.makeText(context, "Not connected to internet.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showSummaryDialog(CitizenComplaintMLADetails citizenComplaintMLADetails) {
@@ -168,22 +175,26 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
     public void onProviderDisabled(String s) {
     }
 
-    private CitizenComplaintMLADetails getOrCreateMLADetails(String mlaConstituencyId) throws JSONException {
+    private CitizenComplaintMLADetails getOrCreateMLADetails(String mlaConstituencyId) throws Exception {
         JSONObject jsonResponse;
         CitizenComplaintMLADetails mlaDetails = citizenComplaintDataSource.getMLADetailsByConstituencyId(mlaConstituencyId);
         if (mlaDetails == null) {
-            jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS + "/" + mlaConstituencyId);
-            JSONArray nodes = jsonResponse.getJSONArray(NODES_PARAMS);
-            JSONObject node = nodes.getJSONObject(0).getJSONObject(NODE_PARAMS);
-            String imageUrl = node.getString(IMAGE_PARAMS);
-            String mlaName = node.getString(MLA_NAME_PARAMS);
-            String mlaEmail = node.getString(MLA_EMAIL_PARAMS);
-            String mlaContactNo = node.getString(MLA_CONTACT_NO_PARAMS);
-            String mlaConstituency = node.getString(MLA_CONSTITUENCY_PARAMS);
-            Bitmap mlaImage = CitizenComplaintHttpUtil.getBitmapFromUrl(imageUrl);
-            Uri mlaImageUri = CitizenComplaintUtility.saveBitmapToFileSystem(mlaImage);
-            mlaDetails = new CitizenComplaintMLADetails(mlaName, mlaEmail, mlaContactNo, mlaConstituencyId, mlaConstituency, mlaImageUri);
-            citizenComplaintDataSource.createMLADetail(mlaDetails);
+            jsonResponse = CitizenComplaintHttpUtil.getJSONFromUrl(context, CITIZEN_COMPLAINT_GET_MLA_INFO_URL_PARAMS + "/" + mlaConstituencyId);
+            if (jsonResponse != null) {
+                JSONArray nodes = jsonResponse.getJSONArray(NODES_PARAMS);
+                JSONObject node = nodes.getJSONObject(0).getJSONObject(NODE_PARAMS);
+                String imageUrl = node.getString(IMAGE_PARAMS);
+                String mlaName = node.getString(MLA_NAME_PARAMS);
+                String mlaEmail = node.getString(MLA_EMAIL_PARAMS);
+                String mlaContactNo = node.getString(MLA_CONTACT_NO_PARAMS);
+                String mlaConstituency = node.getString(MLA_CONSTITUENCY_PARAMS);
+                Bitmap mlaImage = CitizenComplaintHttpUtil.getBitmapFromUrl(context, imageUrl);
+                if (mlaImage != null) {
+                    Uri mlaImageUri = CitizenComplaintUtility.saveBitmapToFileSystem(mlaImage);
+                    mlaDetails = new CitizenComplaintMLADetails(mlaName, mlaEmail, mlaContactNo, mlaConstituencyId, mlaConstituency, mlaImageUri);
+                    citizenComplaintDataSource.createMLADetail(mlaDetails);
+                }
+            }
         }
         return mlaDetails;
     }

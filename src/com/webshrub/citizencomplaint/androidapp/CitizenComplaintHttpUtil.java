@@ -27,102 +27,108 @@ import java.io.*;
 
 public class CitizenComplaintHttpUtil {
 
-    public static JSONObject getJSONFromUrl(String url) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(url);
-        try {
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            int statusCode = httpResponse.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                Log.w("CitizenComplaintHttpUtil", "Error " + statusCode + " while retrieving json from " + url);
-                return null;
-            }
-            HttpEntity httpEntity = httpResponse.getEntity();
-            if (httpEntity != null) {
-                InputStream inputStream = null;
-                try {
-                    inputStream = httpEntity.getContent();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line).append("\n");
-                    }
-                    String json = sb.toString();
-                    return new JSONObject(json);
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    httpEntity.consumeContent();
+    public static JSONObject getJSONFromUrl(Context context, String url) {
+        if (CitizenComplaintUtility.isDeviceOnline(context)) {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpPost);
+                int statusCode = httpResponse.getStatusLine().getStatusCode();
+                if (statusCode != HttpStatus.SC_OK) {
+                    Log.w("CitizenComplaintHttpUtil", "Error " + statusCode + " while retrieving json from " + url);
+                    return null;
                 }
+                HttpEntity httpEntity = httpResponse.getEntity();
+                if (httpEntity != null) {
+                    InputStream inputStream = null;
+                    try {
+                        inputStream = httpEntity.getContent();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            sb.append(line).append("\n");
+                        }
+                        String json = sb.toString();
+                        return new JSONObject(json);
+                    } finally {
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                        httpEntity.consumeContent();
+                    }
+                }
+            } catch (Exception e) {
+                httpPost.abort();
+                Log.e("CitizenComplaintHttpUtil", "Error while retrieving json from " + url);
             }
-        } catch (Exception e) {
-            httpPost.abort();
-            Log.e("CitizenComplaintHttpUtil", "Error while retrieving json from " + url);
         }
         return null;
     }
 
-    public static Bitmap getBitmapFromUrl(String url) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(url);
-        try {
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            int statusCode = httpResponse.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                Log.e("CitizenComplaintHttpUtil", "Error " + statusCode + " while retrieving bitmap from " + url);
-                return null;
-            }
-            HttpEntity httpEntity = httpResponse.getEntity();
-            if (httpEntity != null) {
-                InputStream inputStream = null;
-                try {
-                    inputStream = httpEntity.getContent();
-                    return BitmapFactory.decodeStream(inputStream);
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    httpEntity.consumeContent();
+    public static Bitmap getBitmapFromUrl(Context context, String url) {
+        if (CitizenComplaintUtility.isDeviceOnline(context)) {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                int statusCode = httpResponse.getStatusLine().getStatusCode();
+                if (statusCode != HttpStatus.SC_OK) {
+                    Log.e("CitizenComplaintHttpUtil", "Error " + statusCode + " while retrieving bitmap from " + url);
+                    return null;
                 }
+                HttpEntity httpEntity = httpResponse.getEntity();
+                if (httpEntity != null) {
+                    InputStream inputStream = null;
+                    try {
+                        inputStream = httpEntity.getContent();
+                        return BitmapFactory.decodeStream(inputStream);
+                    } finally {
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                        httpEntity.consumeContent();
+                    }
+                }
+            } catch (Exception e) {
+                httpGet.abort();
+                Log.e("CitizenComplaintHttpUtil", "Error while retrieving bitmap from " + url);
             }
-        } catch (Exception e) {
-            httpGet.abort();
-            Log.e("CitizenComplaintHttpUtil", "Error while retrieving bitmap from " + url);
         }
         return null;
     }
 
     public static void postComplaintDetails(Context context, CitizenComplaint citizenComplaint) {
         try {
-            HttpParams httpParams = new BasicHttpParams();
-            httpParams.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-            DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
-            HttpPost httppost = new HttpPost(CitizenComplaintConstants.CITIZEN_COMPLAINT_POST_URL_PARAMS);
-            MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            multipartEntity.addPart(CitizenComplaintConstants.LATTITUDE_PARAMS, new StringBody("" + citizenComplaint.getLatitude()));
-            multipartEntity.addPart(CitizenComplaintConstants.LONGITUDE_PARAMS, new StringBody("" + citizenComplaint.getLongitude()));
-            multipartEntity.addPart(CitizenComplaintConstants.ISSUE_TYPE_PARAMS, new StringBody("" + citizenComplaint.getComplaintId()));
-            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_ID_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateId()));
-            multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
-            multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintUtility.getDeviceIdentifier(context)));
-            multipartEntity.addPart(CitizenComplaintConstants.ADDRESS_PARAMS, new StringBody("" + citizenComplaint.getComplaintAddress()));
-            if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
-                File file = new File(citizenComplaint.getSelectedComplaintImageUri());
-                if (file.exists()) {
-                    multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(file));
+            if (CitizenComplaintUtility.isDeviceOnline(context)) {
+                HttpParams httpParams = new BasicHttpParams();
+                httpParams.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+                DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
+                HttpPost httppost = new HttpPost(CitizenComplaintConstants.CITIZEN_COMPLAINT_POST_URL_PARAMS);
+                MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+                multipartEntity.addPart(CitizenComplaintConstants.LATTITUDE_PARAMS, new StringBody("" + citizenComplaint.getLatitude()));
+                multipartEntity.addPart(CitizenComplaintConstants.LONGITUDE_PARAMS, new StringBody("" + citizenComplaint.getLongitude()));
+                multipartEntity.addPart(CitizenComplaintConstants.ISSUE_TYPE_PARAMS, new StringBody("" + citizenComplaint.getComplaintId()));
+                multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_ID_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateId()));
+                multipartEntity.addPart(CitizenComplaintConstants.TEMPLATE_TEXT_PARAMS, new StringBody("" + citizenComplaint.getSelectedTemplateString()));
+                multipartEntity.addPart(CitizenComplaintConstants.REPORTER_ID_PARAMS, new StringBody("" + CitizenComplaintUtility.getDeviceIdentifier(context)));
+                multipartEntity.addPart(CitizenComplaintConstants.ADDRESS_PARAMS, new StringBody("" + citizenComplaint.getComplaintAddress()));
+                if (citizenComplaint.getSelectedComplaintImageUri() != null && !citizenComplaint.getSelectedComplaintImageUri().equals("")) {
+                    File file = new File(citizenComplaint.getSelectedComplaintImageUri());
+                    if (file.exists()) {
+                        multipartEntity.addPart(CitizenComplaintConstants.IMAGE_URI_PARAMS, new FileBody(file));
+                    }
                 }
-            }
-            if (citizenComplaint.getProfileThumbnailImageUri() != null && !citizenComplaint.getProfileThumbnailImageUri().equals("")) {
-                File file = new File(citizenComplaint.getProfileThumbnailImageUri());
-                if (file.exists()) {
-                    multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(file));
+                if (citizenComplaint.getProfileThumbnailImageUri() != null && !citizenComplaint.getProfileThumbnailImageUri().equals("")) {
+                    File file = new File(citizenComplaint.getProfileThumbnailImageUri());
+                    if (file.exists()) {
+                        multipartEntity.addPart(CitizenComplaintConstants.PROFILE_IMAGE_URI_PARAMS, new FileBody(file));
+                    }
                 }
+                httppost.setEntity(multipartEntity);
+                httpClient.execute(httppost, new CitizenComplaintUploadResponseHandler());
+                CitizenComplaintDataSource.getInstance(context).deleteCitizenComplaint(citizenComplaint);
             }
-            httppost.setEntity(multipartEntity);
-            httpClient.execute(httppost, new CitizenComplaintUploadResponseHandler());
-            CitizenComplaintDataSource.getInstance(context).deleteCitizenComplaint(citizenComplaint);
         } catch (Exception e) {
             Log.e("Complaint Upload", "Complaint Upload exception: " + e.getMessage());
         }
