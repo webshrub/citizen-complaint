@@ -1,6 +1,7 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.app.Application;
+import android.util.Log;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * Time: 9:38 PM
  */
 public class CitizenComplaintApplication extends Application {
+    public static final String CITIZEN_COMPLAINT_APPLICATION_LOG_TAG = "CitizenComplaintApplication";
 
     @Override
     public void onCreate() {
@@ -25,8 +27,12 @@ public class CitizenComplaintApplication extends Application {
         @SuppressWarnings("unchecked")
         @Override
         public void run() {
-            for (CitizenComplaint citizenComplaint : CitizenComplaintDataSource.getInstance(getApplicationContext()).getAllCitizenComplaints()) {
-                CitizenComplaintHttpUtil.postComplaintDetails(getApplicationContext(), citizenComplaint);
+            if (CitizenComplaintUtility.isDeviceOnline(getApplicationContext())) {
+                for (CitizenComplaint citizenComplaint : CitizenComplaintDataSource.getInstance(getApplicationContext()).getAllCitizenComplaints()) {
+                    CitizenComplaintHttpUtil.postComplaintDetails(getApplicationContext(), citizenComplaint);
+                }
+            } else {
+                Log.w(CITIZEN_COMPLAINT_APPLICATION_LOG_TAG, "Not connected to internet.");
             }
         }
     }

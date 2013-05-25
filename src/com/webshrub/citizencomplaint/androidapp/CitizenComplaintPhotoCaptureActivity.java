@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
@@ -77,7 +78,11 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String profileThumbnailImageUriString = preferences.getString(PROFILE_THUMBNAIL_IMAGE_URI, "");
                 citizenComplaint.setProfileThumbnailImageUri(profileThumbnailImageUriString);
-                new CitizenComplaintInsertDetailsTask(this, citizenComplaint).execute();
+                if (CitizenComplaintUtility.isDeviceOnline(this)) {
+                    new CitizenComplaintInsertDetailsTask(this, citizenComplaint).execute();
+                } else {
+                    Toast.makeText(this, "Not connected to internet.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }
