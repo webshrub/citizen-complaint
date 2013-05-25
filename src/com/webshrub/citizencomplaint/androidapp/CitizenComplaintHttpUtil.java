@@ -60,7 +60,7 @@ public class CitizenComplaintHttpUtil {
                 }
             } catch (Exception e) {
                 httpPost.abort();
-                Log.e("CitizenComplaintHttpUtil", "Error while retrieving json from " + url);
+                Log.e("CitizenComplaintHttpUtil", "Error while retrieving json from " + url + " message = " + e.getMessage());
             }
         }
         return null;
@@ -92,7 +92,7 @@ public class CitizenComplaintHttpUtil {
                 }
             } catch (Exception e) {
                 httpGet.abort();
-                Log.e("CitizenComplaintHttpUtil", "Error while retrieving bitmap from " + url);
+                Log.e("CitizenComplaintHttpUtil", "Error while retrieving bitmap from " + url + " message = " + e.getMessage());
             }
         }
         return null;
