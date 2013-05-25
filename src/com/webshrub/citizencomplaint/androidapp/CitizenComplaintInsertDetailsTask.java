@@ -88,6 +88,10 @@ public class CitizenComplaintInsertDetailsTask extends AsyncTask<Void, Void, Cit
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
+        showSummaryDialog(citizenComplaintMLADetails);
+    }
+
+    private void showSummaryDialog(CitizenComplaintMLADetails citizenComplaintMLADetails) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.citizen_complaint_summary_dialog, null);
         TextView mlaNameConstituency = (TextView) view.findViewById(R.id.mlaNameConstituencyTextView);
