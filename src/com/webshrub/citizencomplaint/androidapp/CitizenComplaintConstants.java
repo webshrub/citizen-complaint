@@ -36,4 +36,5 @@ public class CitizenComplaintConstants {
     public static final String MLA_CONTACT_NO_PARAMS = "mla_contact_no";
     public static final String MLA_CONSTITUENCY_PARAMS = "constituency";
     public static final String NODE_PARAMS = "node";
+    public static final String GOOGLE = "http://8.8.8.8";
 }
