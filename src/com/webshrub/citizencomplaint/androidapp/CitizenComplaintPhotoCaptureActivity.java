@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
@@ -23,6 +26,14 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     private static final int IMAGE_CAPTURE_REQUEST = 100;
     private static final int IMAGE_SELECT_REQUEST = 101;
     private Uri imageUri;
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.drawable.camera)
+            .showImageForEmptyUri(R.drawable.ic_empty)
+            .showImageOnFail(R.drawable.ic_error)
+            .cacheInMemory()
+            .cacheOnDisc()
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +49,8 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         complaint.setText(citizenComplaint.getSelectedTemplateString());
         if (savedInstanceState != null && savedInstanceState.containsKey(COMPLAINT_IMAGE_URI)) {
             imageUri = Uri.parse(savedInstanceState.getString(COMPLAINT_IMAGE_URI));
-            ((ImageView) findViewById(R.id.imageView1)).setImageURI(imageUri);
+            ImageView imageView = ((ImageView) findViewById(R.id.imageView1));
+            ImageLoader.getInstance().displayImage(imageUri.toString(), imageView, options);
         }
     }
 
@@ -95,13 +107,13 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
         switch (requestCode) {
             case IMAGE_CAPTURE_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    imageView.setImageURI(imageUri);
+                    ImageLoader.getInstance().displayImage(imageUri.toString(), imageView, options);
                 }
                 break;
             case IMAGE_SELECT_REQUEST:
                 if (resultCode == RESULT_OK) {
                     imageUri = intent.getData();
-                    imageView.setImageURI(imageUri);
+                    ImageLoader.getInstance().displayImage(imageUri.toString(), imageView, options);
                 }
             default:
                 break;

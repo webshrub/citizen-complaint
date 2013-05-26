@@ -7,6 +7,7 @@ package com.webshrub.citizencomplaint.androidapp;
  * Time: 2:25 PM
  */
 public class CitizenComplaintConstants {
+    public static final boolean DEVELOPER_MODE = false;
     public static final String CITIZEN_COMPLAINT = "CITIZEN_COMPLAINT";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
