@@ -2,6 +2,7 @@ package com.webshrub.citizencomplaint.androidapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,6 +10,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
@@ -23,6 +26,14 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
     private static final int IMAGE_SELECT_REQUEST = 101;
     private Uri profileImageUri;
     private SharedPreferences preferences;
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.drawable.camera)
+            .showImageForEmptyUri(R.drawable.ic_empty)
+            .showImageOnFail(R.drawable.ic_error)
+            .cacheInMemory()
+            .cacheOnDisc()
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +45,8 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
         String profileImageUriString = preferences.getString(PROFILE_IMAGE_URI, "");
         if (!profileImageUriString.equals("")) {
             profileImageUri = Uri.parse(profileImageUriString);
-            ((ImageView) findViewById(R.id.imageView1)).setImageURI(profileImageUri);
+            ImageView imageView = (ImageView) findViewById(R.id.imageView1);
+            ImageLoader.getInstance().displayImage(profileImageUri.toString(), imageView, options);
         }
     }
 
@@ -68,7 +80,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
             case IMAGE_CAPTURE_REQUEST:
                 if (resultCode == RESULT_OK) {
                     if (profileImageUri != null) {
-                        imageView.setImageURI(profileImageUri);
+                        ImageLoader.getInstance().displayImage(profileImageUri.toString(), imageView, options);
                         String thumbnailPath = CitizenComplaintUtility.getCompressedImagePath(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(PROFILE_IMAGE_URI, profileImageUri.toString());
@@ -81,7 +93,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
                 if (resultCode == RESULT_OK) {
                     profileImageUri = intent.getData();
                     if (profileImageUri != null) {
-                        imageView.setImageURI(profileImageUri);
+                        ImageLoader.getInstance().displayImage(profileImageUri.toString(), imageView, options);
                         String thumbnailPath = CitizenComplaintUtility.getCompressedImagePath(CitizenComplaintUtility.getAbsoluteFilePath(this, profileImageUri.toString()), THUMBNAIL_SIZE, THUMBNAIL_SIZE);
                         SharedPreferences.Editor preferenceEditor = preferences.edit();
                         preferenceEditor.putString(PROFILE_IMAGE_URI, profileImageUri.toString());
