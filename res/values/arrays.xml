@@ -4,4 +4,8 @@
         <item>About</item>
         <item>Profile</item>
     </string-array>
+    <string-array name="upload_photo_items">
+        <item>Take Photo</item>
+        <item>Choose Photo</item>
+    </string-array>
 </resources>

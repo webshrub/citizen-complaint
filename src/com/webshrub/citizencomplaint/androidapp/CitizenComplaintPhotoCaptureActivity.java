@@ -1,6 +1,7 @@
 package com.webshrub.citizencomplaint.androidapp;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,17 +15,13 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import static com.webshrub.citizencomplaint.androidapp.CitizenComplaintConstants.*;
 
 public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivity implements OnClickListener {
-    private static final int IMAGE_CAPTURE_REQUEST = 100;
-    private static final int IMAGE_SELECT_REQUEST = 101;
     private Uri imageUri;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.drawable.camera)
@@ -66,26 +63,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1: {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setCancelable(true);
-                alertDialog.setTitle("Upload Photo");
-                alertDialog.setPositiveButton("Take a picture", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        imageUri = CitizenComplaintUtility.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                        newIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
-                    }
-                });
-                alertDialog.setNegativeButton("Pick existing", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent newIntent = new Intent();
-                        newIntent.setType("image/*");
-                        newIntent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(newIntent, IMAGE_SELECT_REQUEST);
-                    }
-                });
-                alertDialog.show();
+                showUploadPhotoDialog();
                 break;
             }
             case R.id.button3: {
@@ -150,5 +128,43 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
             }
         });
         alertDialog.show();
+    }
+
+    private void showUploadPhotoDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.citizen_complaint_upload_photo_dialog);
+        ListView listView = (ListView) dialog.findViewById(R.id.listview1);
+        listView.setOnItemClickListener(new CitizenComplaintUploadPhotoOnItemClickListener(dialog));
+        dialog.setCancelable(true);
+        dialog.setTitle("Upload Photo");
+        dialog.show();
+    }
+
+    private class CitizenComplaintUploadPhotoOnItemClickListener implements AdapterView.OnItemClickListener {
+        private Dialog dialog;
+
+        public CitizenComplaintUploadPhotoOnItemClickListener(Dialog dialog) {
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent newIntent;
+            dialog.dismiss();
+            switch (position) {
+                case 0:
+                    newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    imageUri = CitizenComplaintUtility.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                    newIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
+                    break;
+                case 1:
+                    newIntent = new Intent();
+                    newIntent.setType("image/*");
+                    newIntent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(newIntent, IMAGE_SELECT_REQUEST);
+                    break;
+            }
+        }
     }
 }

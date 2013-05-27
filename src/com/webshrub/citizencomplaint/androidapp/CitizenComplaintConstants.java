@@ -8,12 +8,14 @@ package com.webshrub.citizencomplaint.androidapp;
  */
 public class CitizenComplaintConstants {
     public static final boolean DEVELOPER_MODE = false;
-    public static final String CITIZEN_COMPLAINT = "CITIZEN_COMPLAINT";
+    public static final int IMAGE_CAPTURE_REQUEST = 100;
+    public static final int IMAGE_SELECT_REQUEST = 101;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
     public static final int THUMBNAIL_SIZE = 60;
     public static final int COMPLAINT_IMAGE_WIDTH = 800;
     public static final int COMPLAINT_IMAGE_HEIGHT = 600;
+    public static final String CITIZEN_COMPLAINT = "CITIZEN_COMPLAINT";
     public static final String COMPLAINT_IMAGE_URI = "COMPLAINT_IMAGE_URI";
     public static final String PROFILE_IMAGE_URI = "PROFILE_IMAGE_URI";
     public static final String PROFILE_THUMBNAIL_IMAGE_URI = "PROFILE_THUMBNAIL_IMAGE_URI";
