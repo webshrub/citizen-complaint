@@ -39,7 +39,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.citizen_complaint_photo_capture_activity);
-        findViewById(R.id.imageView1).setOnClickListener(this);
+        findViewById(R.id.button1).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
         CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CITIZEN_COMPLAINT);
         TextView category = (TextView) findViewById(R.id.categoryTextView);
@@ -65,7 +65,7 @@ public class CitizenComplaintPhotoCaptureActivity extends CitizenComplaintActivi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imageView1: {
+            case R.id.button1: {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setCancelable(true);
                 alertDialog.setTitle("Upload Photo");

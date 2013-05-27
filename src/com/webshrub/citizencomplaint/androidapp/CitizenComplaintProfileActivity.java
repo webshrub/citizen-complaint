@@ -41,7 +41,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.citizen_complaint_profile_activity);
-        findViewById(R.id.imageView1).setOnClickListener(this);
+        findViewById(R.id.button1).setOnClickListener(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String profileImageUriString = preferences.getString(PROFILE_IMAGE_URI, "");
         if (!profileImageUriString.equals("")) {
@@ -55,7 +55,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imageView1: {
+            case R.id.button1: {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
                 alertDialog.setCancelable(true);
                 alertDialog.setTitle("Upload Photo");

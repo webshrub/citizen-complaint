@@ -220,8 +220,7 @@
     <string name="lackOfQualityStaff">Lack Of Quality Staff</string>
     <string name="exorbitantPricing">Exorbitant Pricing</string>
     <string name="lackOfAwareness">Lack Of Awareness</string>
-    <string name="takeAPic">Take a Pic</string>
-    <string name="pickExisting">Pick Existing</string>
+    <string name="uploadPhoto">Upload Photo</string>
     <string name="send">Send</string>
     <string name="enableLocationServices">Enable Location Services</string>
     <string name="locationProvidersDisabled">Location providers not enabled. Would you like to enable them?</string>
