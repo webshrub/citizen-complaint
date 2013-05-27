@@ -1,5 +1,7 @@
 package com.webshrub.citizencomplaint.androidapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -39,8 +41,7 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.citizen_complaint_profile_activity);
-        findViewById(R.id.button1).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.imageView1).setOnClickListener(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String profileImageUriString = preferences.getString(PROFILE_IMAGE_URI, "");
         if (!profileImageUriString.equals("")) {
@@ -53,22 +54,30 @@ public class CitizenComplaintProfileActivity extends SherlockActivity implements
     @SuppressWarnings("unchecked")
     @Override
     public void onClick(View v) {
-        Intent newIntent;
         switch (v.getId()) {
-            case R.id.button1: {
-                newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                profileImageUri = CitizenComplaintUtility.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                newIntent.putExtra(MediaStore.EXTRA_OUTPUT, profileImageUri);
-                startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
+            case R.id.imageView1: {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setCancelable(true);
+                alertDialog.setTitle("Upload Photo");
+                alertDialog.setPositiveButton("Take a picture", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent newIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        profileImageUri = CitizenComplaintUtility.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                        newIntent.putExtra(MediaStore.EXTRA_OUTPUT, profileImageUri);
+                        startActivityForResult(newIntent, IMAGE_CAPTURE_REQUEST);
+                    }
+                });
+                alertDialog.setNegativeButton("Pick existing", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent newIntent = new Intent();
+                        newIntent.setType("image/*");
+                        newIntent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(newIntent, IMAGE_SELECT_REQUEST);
+                    }
+                });
+                alertDialog.show();
+                break;
             }
-            break;
-            case R.id.button2: {
-                newIntent = new Intent();
-                newIntent.setType("image/*");
-                newIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(newIntent, IMAGE_SELECT_REQUEST);
-            }
-            break;
         }
     }
 
