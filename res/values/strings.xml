@@ -225,4 +225,6 @@
     <string name="enableLocationServices">Enable Location Services</string>
     <string name="locationProvidersDisabled">Location providers not enabled. Would you like to enable them?</string>
     <string name="enable">Enable</string>
+    <string name="chooseSystemLevel">Choose System Level</string>
+    <string name="typeOfComplaint">Type of Complaint:</string>
 </resources>

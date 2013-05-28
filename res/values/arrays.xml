@@ -8,4 +8,11 @@
         <item>Take Photo</item>
         <item>Choose Photo</item>
     </string-array>
+    <string-array name="system_level_items">
+        <item>Lack Of Infrastructure</item>
+        <item>Lack Of Maintenance</item>
+        <item>Lack Of Quality Staff</item>
+        <item>Exorbitant Pricing</item>
+        <item>Lack Of Awareness</item>
+    </string-array>
 </resources>

@@ -15,7 +15,7 @@ public class CitizenComplaintTemplateListActivity extends CitizenComplaintActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.citizen_complaint_template_list_activity);
-        CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
+        CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT);
         String[] templates = getTemplates(citizenComplaint);
         ((TextView) findViewById(R.id.textView1)).setText("Complaint about : " + citizenComplaint.getComplaintCategory() + "...");
         ListView listView = (ListView) findViewById(R.id.listView1);
@@ -43,9 +43,8 @@ public class CitizenComplaintTemplateListActivity extends CitizenComplaintActivi
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
+            CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT);
             if (position == adapter.getCount() - 1) {
-                citizenComplaint.setSelectedTemplateId(citizenComplaint.getCitizenComplaintTemplateAt(position).getTemplateId());
                 Intent newIntent = new Intent(CitizenComplaintTemplateListActivity.this, CitizenComplaintTypeComplaintActivity.class);
                 newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
                 startActivity(newIntent);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActivity implements OnClickListener {
 
@@ -17,9 +18,30 @@ public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActiv
 
     @Override
     public void onClick(View v) {
-        CitizenComplaint citizenComplaint = ((CitizenComplaint) getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT));
-        String selectedTemplateComplaintString = ((EditText) findViewById(R.id.editText1)).getText().toString();
-        citizenComplaint.setSelectedTemplateString(selectedTemplateComplaintString);
+        CitizenComplaint citizenComplaint = getIntent().getExtras().getParcelable(CitizenComplaintConstants.CITIZEN_COMPLAINT);
+        Spinner complaintType = (Spinner) findViewById(R.id.typeOfComplaintSpinner);
+        int selectedItemPosition = complaintType.getSelectedItemPosition();
+        switch (selectedItemPosition) {
+            case 0:
+                citizenComplaint.setSelectedTemplateId("" + 0);
+                break;
+            case 1:
+                citizenComplaint.setSelectedTemplateId("" + 10);
+                break;
+            case 2:
+                citizenComplaint.setSelectedTemplateId("" + 20);
+                break;
+            case 3:
+                citizenComplaint.setSelectedTemplateId("" + 30);
+                break;
+            case 4:
+                citizenComplaint.setSelectedTemplateId("" + 40);
+                break;
+            default:
+                citizenComplaint.setSelectedTemplateId("" + 0);
+                break;
+        }
+        citizenComplaint.setSelectedTemplateString(((EditText) findViewById(R.id.editText1)).getText().toString());
         Intent newIntent = new Intent(CitizenComplaintTypeComplaintActivity.this, CitizenComplaintPhotoCaptureActivity.class);
         newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
         startActivity(newIntent);
