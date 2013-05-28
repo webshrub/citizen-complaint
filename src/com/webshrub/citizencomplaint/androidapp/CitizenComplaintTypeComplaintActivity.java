@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActivity implements OnClickListener {
 
@@ -41,9 +42,14 @@ public class CitizenComplaintTypeComplaintActivity extends CitizenComplaintActiv
                 citizenComplaint.setSelectedTemplateId("" + 0);
                 break;
         }
-        citizenComplaint.setSelectedTemplateString(((EditText) findViewById(R.id.editText1)).getText().toString());
-        Intent newIntent = new Intent(CitizenComplaintTypeComplaintActivity.this, CitizenComplaintPhotoCaptureActivity.class);
-        newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
-        startActivity(newIntent);
+        String selectedTemplateString = ((EditText) findViewById(R.id.editText1)).getText().toString();
+        if (selectedTemplateString != null && !selectedTemplateString.equals("")) {
+            citizenComplaint.setSelectedTemplateString(selectedTemplateString);
+            Intent newIntent = new Intent(CitizenComplaintTypeComplaintActivity.this, CitizenComplaintPhotoCaptureActivity.class);
+            newIntent.putExtra(CitizenComplaintConstants.CITIZEN_COMPLAINT, citizenComplaint);
+            startActivity(newIntent);
+        } else {
+            Toast.makeText(this, "Please write something in complaint box.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
